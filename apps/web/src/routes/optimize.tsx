@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { CodeDiffViewer } from "@/components/code-diff-viewer";
+import { CodeViewer } from "@/components/code-viewer";
 import { ConfigPanel } from "@/components/config-panel";
 import { SvgPreview } from "@/components/svg-preview";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,15 @@ import {
   prettifySvg,
   readFileAsText,
 } from "@/lib/file-utils";
+import {
+  getComponentName,
+  svgToFlutter,
+  svgToReactJSX,
+  svgToReactNative,
+  svgToReactTSX,
+  svgToSvelte,
+  svgToVue,
+} from "@/lib/svg-to-code";
 import {
   buildSvgoConfig,
   calculateCompressionRate,
@@ -43,6 +53,11 @@ function OptimizeComponent() {
   const [prettifiedCompressed, setPrettifiedCompressed] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [hasAutoSwitchedTab, setHasAutoSwitchedTab] = useState(false);
+
+  // Code generation state for lazy loading
+  const [generatedCodes, setGeneratedCodes] = useState<Map<string, string>>(
+    new Map()
+  );
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -164,6 +179,34 @@ function OptimizeComponent() {
     }
   }, [compressedSvg, hasAutoSwitchedTab]);
 
+  // Get component name from filename
+  const componentName = useMemo(() => getComponentName(fileName), [fileName]);
+
+  // Generate code for active code tab (lazy loading)
+  useEffect(() => {
+    if (!(compressedSvg && activeTab)) {
+      return;
+    }
+
+    const codeGenerators: Record<
+      string,
+      (svg: string, name?: string) => string
+    > = {
+      "react-jsx": svgToReactJSX,
+      "react-tsx": svgToReactTSX,
+      vue: svgToVue,
+      svelte: svgToSvelte,
+      "react-native": svgToReactNative,
+      flutter: svgToFlutter,
+    };
+
+    if (activeTab in codeGenerators) {
+      const generator = codeGenerators[activeTab];
+      const code = generator(compressedSvg, fileName);
+      setGeneratedCodes((prev) => new Map(prev).set(activeTab, code));
+    }
+  }, [activeTab, compressedSvg, fileName]);
+
   const handleCopy = async () => {
     try {
       await copyToClipboard(compressedSvg);
@@ -243,6 +286,12 @@ function OptimizeComponent() {
                 )}
                 <TabsTrigger value="optimized">Optimized</TabsTrigger>
                 <TabsTrigger value="code">Code</TabsTrigger>
+                <TabsTrigger value="react-jsx">React JSX</TabsTrigger>
+                <TabsTrigger value="react-tsx">React TSX</TabsTrigger>
+                <TabsTrigger value="vue">Vue</TabsTrigger>
+                <TabsTrigger value="svelte">Svelte</TabsTrigger>
+                <TabsTrigger value="react-native">React Native</TabsTrigger>
+                <TabsTrigger value="flutter">Flutter</TabsTrigger>
               </TabsList>
 
               {globalSettings.showOriginal && (
@@ -285,6 +334,111 @@ function OptimizeComponent() {
                 ) : (
                   <div className="flex h-full items-center justify-center text-muted-foreground">
                     No optimized code yet
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* React JSX */}
+              <TabsContent
+                className="mt-0 flex-1 overflow-hidden"
+                value="react-jsx"
+              >
+                {generatedCodes.get("react-jsx") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("react-jsx") || ""}
+                    fileName={`${componentName}.jsx`}
+                    language="javascript"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating React JSX code...
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* React TSX */}
+              <TabsContent
+                className="mt-0 flex-1 overflow-hidden"
+                value="react-tsx"
+              >
+                {generatedCodes.get("react-tsx") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("react-tsx") || ""}
+                    fileName={`${componentName}.tsx`}
+                    language="typescript"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating React TSX code...
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* Vue */}
+              <TabsContent className="mt-0 flex-1 overflow-hidden" value="vue">
+                {generatedCodes.get("vue") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("vue") || ""}
+                    fileName={`${componentName}.vue`}
+                    language="html"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating Vue code...
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* Svelte */}
+              <TabsContent
+                className="mt-0 flex-1 overflow-hidden"
+                value="svelte"
+              >
+                {generatedCodes.get("svelte") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("svelte") || ""}
+                    fileName={`${componentName}.svelte`}
+                    language="html"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating Svelte code...
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* React Native */}
+              <TabsContent
+                className="mt-0 flex-1 overflow-hidden"
+                value="react-native"
+              >
+                {generatedCodes.get("react-native") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("react-native") || ""}
+                    fileName={`${componentName}.jsx`}
+                    language="javascript"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating React Native code...
+                  </div>
+                )}
+              </TabsContent>
+
+              {/* Flutter */}
+              <TabsContent
+                className="mt-0 flex-1 overflow-hidden"
+                value="flutter"
+              >
+                {generatedCodes.get("flutter") ? (
+                  <CodeViewer
+                    code={generatedCodes.get("flutter") || ""}
+                    fileName={`${componentName}.dart`}
+                    language="dart"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-muted-foreground">
+                    Generating Flutter code...
                   </div>
                 )}
               </TabsContent>
