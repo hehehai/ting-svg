@@ -66,7 +66,11 @@ function OptimizeComponent() {
   useAutoCompress(originalSvg, plugins, globalSettings, setCompressedSvg);
 
   const componentName = useMemo(() => getComponentName(fileName), [fileName]);
-  const generatedCodes = useCodeGeneration(activeTab, compressedSvg, fileName);
+  const { generatedCodes } = useCodeGeneration(
+    activeTab,
+    compressedSvg,
+    fileName
+  );
 
   const handleCopy = async () => {
     try {

@@ -184,6 +184,28 @@ export function processSvg(svgString: string): {
   };
 }
 
+// Prepare SVG data for worker (includes DOM parsing that can't be done in worker)
+export function prepareSvgDataForWorker(
+  svgString: string,
+  fileName?: string
+): {
+  innerContent: string;
+  viewBox: string;
+  componentName: string;
+  processedContent: string;
+} {
+  const componentName = getComponentName(fileName);
+  const { processedSvg, viewBox } = processSvg(svgString);
+  const { innerContent } = parseSvg(processedSvg);
+
+  return {
+    innerContent,
+    viewBox,
+    componentName,
+    processedContent: processedSvg,
+  };
+}
+
 // Convert SVG inner content for React (camelCase attributes)
 function convertSvgToReactContent(svgContent: string): string {
   let content = svgContent;

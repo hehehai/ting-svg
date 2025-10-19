@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/file-utils";
-import { prettifyCode, type SupportedLanguage } from "@/lib/prettify-code";
+import type { SupportedLanguage } from "@/lib/worker-utils/prettier-worker-client";
+import { prettierWorkerClient } from "@/lib/worker-utils/prettier-worker-client";
 
 type CodeViewerProps = {
   code: string;
@@ -25,11 +26,14 @@ export function CodeViewer({ code, language, fileName }: CodeViewerProps) {
 
   const handlePrettify = async () => {
     try {
-      const prettified = await prettifyCode(displayCode, language);
+      const prettified = await prettierWorkerClient.format(
+        displayCode,
+        language
+      );
       setDisplayCode(prettified);
       setIsPrettified(true);
       toast.success("Code formatted successfully!");
-    } catch {
+    } catch (_error) {
       toast.error("Failed to format code");
     }
   };
