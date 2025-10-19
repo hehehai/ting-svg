@@ -16,6 +16,7 @@ import {
   prettifySvg,
   readFileAsText,
 } from "@/lib/file-utils";
+import type { SupportedLanguage } from "@/lib/prettify-code";
 import {
   getComponentName,
   svgToFlutter,
@@ -31,43 +32,16 @@ import {
   compressSvg,
   formatBytes,
 } from "@/lib/svgo";
+import type { SvgoGlobalSettings, SvgoPluginConfig } from "@/lib/svgo-plugins";
 import { useSvgStore } from "@/store/svg-store";
 
 export const Route = createFileRoute("/optimize")({
   component: OptimizeComponent,
 });
 
-function OptimizeComponent() {
-  const {
-    originalSvg,
-    compressedSvg,
-    fileName,
-    plugins,
-    globalSettings,
-    setOriginalSvg,
-    setCompressedSvg,
-  } = useSvgStore();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState("original");
-  const [prettifiedOriginal, setPrettifiedOriginal] = useState("");
-  const [prettifiedCompressed, setPrettifiedCompressed] = useState("");
+// Custom hook for drag and drop functionality
+function useDragAndDrop() {
   const [isDragging, setIsDragging] = useState(false);
-  const [hasAutoSwitchedTab, setHasAutoSwitchedTab] = useState(false);
-
-  // Code generation state for lazy loading
-  const [generatedCodes, setGeneratedCodes] = useState<Map<string, string>>(
-    new Map()
-  );
-
-  const handleFileUpload = useCallback(
-    async (file: File) => {
-      const content = await readFileAsText(file);
-      setOriginalSvg(content, file.name);
-      setHasAutoSwitchedTab(false);
-      toast.success("SVG file uploaded successfully!");
-    },
-    [setOriginalSvg]
-  );
 
   useEffect(() => {
     const handleDragEnter = (e: DragEvent) => {
@@ -91,6 +65,28 @@ function OptimizeComponent() {
       setIsDragging(false);
     };
 
+    document.addEventListener("dragenter", handleDragEnter);
+    document.addEventListener("dragleave", handleDragLeave);
+    document.addEventListener("dragover", handleDragOver);
+    document.addEventListener("drop", handleDrop);
+
+    return () => {
+      document.removeEventListener("dragenter", handleDragEnter);
+      document.removeEventListener("dragleave", handleDragLeave);
+      document.removeEventListener("dragover", handleDragOver);
+      document.removeEventListener("drop", handleDrop);
+    };
+  }, []);
+
+  return isDragging;
+}
+
+// Custom hook for paste functionality
+function usePasteHandler(
+  setOriginalSvg: (svg: string, name: string) => void,
+  setHasAutoSwitchedTab: (value: boolean) => void
+) {
+  useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
       if (!items) {
@@ -117,72 +113,40 @@ function OptimizeComponent() {
       }
     };
 
-    document.addEventListener("dragenter", handleDragEnter);
-    document.addEventListener("dragleave", handleDragLeave);
-    document.addEventListener("dragover", handleDragOver);
-    document.addEventListener("drop", handleDrop);
     document.addEventListener("paste", handlePaste);
+    return () => document.removeEventListener("paste", handlePaste);
+  }, [setOriginalSvg, setHasAutoSwitchedTab]);
+}
 
-    return () => {
-      document.removeEventListener("dragenter", handleDragEnter);
-      document.removeEventListener("dragleave", handleDragLeave);
-      document.removeEventListener("dragover", handleDragOver);
-      document.removeEventListener("drop", handleDrop);
-      document.removeEventListener("paste", handlePaste);
-    };
-  }, [setOriginalSvg]);
+// Custom hook for prettification
+function usePrettifiedSvg(svg: string, shouldPrettify: boolean): string {
+  const [prettified, setPrettified] = useState("");
 
   useEffect(() => {
     const prettify = async () => {
-      if (globalSettings.prettifyMarkup && originalSvg) {
-        const prettified = await prettifySvg(originalSvg);
-        setPrettifiedOriginal(prettified);
+      if (shouldPrettify && svg) {
+        const result = await prettifySvg(svg);
+        setPrettified(result);
       } else {
-        setPrettifiedOriginal(originalSvg);
+        setPrettified(svg);
       }
     };
     prettify();
-  }, [originalSvg, globalSettings.prettifyMarkup]);
+  }, [svg, shouldPrettify]);
 
-  useEffect(() => {
-    const prettify = async () => {
-      if (globalSettings.prettifyMarkup && compressedSvg) {
-        const prettified = await prettifySvg(compressedSvg);
-        setPrettifiedCompressed(prettified);
-      } else {
-        setPrettifiedCompressed(compressedSvg);
-      }
-    };
-    prettify();
-  }, [compressedSvg, globalSettings.prettifyMarkup]);
+  return prettified;
+}
 
-  const handleCompress = useCallback(() => {
-    try {
-      const config = buildSvgoConfig(plugins, globalSettings);
-      const result = compressSvg(originalSvg, config);
-      setCompressedSvg(result);
-    } catch {
-      toast.error("Failed to optimize SVG");
-    }
-  }, [originalSvg, plugins, globalSettings, setCompressedSvg]);
+// Custom hook for code generation
+function useCodeGeneration(
+  activeTab: string,
+  compressedSvg: string,
+  fileName: string
+) {
+  const [generatedCodes, setGeneratedCodes] = useState<Map<string, string>>(
+    new Map()
+  );
 
-  useEffect(() => {
-    if (originalSvg) {
-      handleCompress();
-    }
-  }, [originalSvg, handleCompress]);
-
-  useEffect(() => {
-    if (compressedSvg && !hasAutoSwitchedTab) {
-      setActiveTab("optimized");
-      setHasAutoSwitchedTab(true);
-    }
-  }, [compressedSvg, hasAutoSwitchedTab]);
-
-  // Get component name from filename
-  const componentName = useMemo(() => getComponentName(fileName), [fileName]);
-
-  // Generate code for active code tab (lazy loading)
   useEffect(() => {
     if (!(compressedSvg && activeTab)) {
       return;
@@ -202,10 +166,202 @@ function OptimizeComponent() {
 
     if (activeTab in codeGenerators) {
       const generator = codeGenerators[activeTab];
+      if (!generator) {
+        return;
+      }
       const code = generator(compressedSvg, fileName);
       setGeneratedCodes((prev) => new Map(prev).set(activeTab, code));
     }
   }, [activeTab, compressedSvg, fileName]);
+
+  return generatedCodes;
+}
+
+// Custom hook for auto-compression
+function useAutoCompress(
+  originalSvg: string,
+  plugins: SvgoPluginConfig[],
+  globalSettings: SvgoGlobalSettings,
+  setCompressedSvg: (svg: string) => void
+) {
+  const handleCompress = useCallback(() => {
+    try {
+      const config = buildSvgoConfig(plugins, globalSettings);
+      const result = compressSvg(originalSvg, config);
+      setCompressedSvg(result);
+    } catch {
+      toast.error("Failed to optimize SVG");
+    }
+  }, [originalSvg, plugins, globalSettings, setCompressedSvg]);
+
+  useEffect(() => {
+    if (originalSvg) {
+      handleCompress();
+    }
+  }, [originalSvg, handleCompress]);
+}
+
+// Custom hook for auto tab switching
+function useAutoTabSwitch(
+  compressedSvg: string,
+  setActiveTab: (tab: string) => void
+) {
+  const [hasAutoSwitchedTab, setHasAutoSwitchedTab] = useState(false);
+
+  useEffect(() => {
+    if (compressedSvg && !hasAutoSwitchedTab) {
+      setActiveTab("optimized");
+      setHasAutoSwitchedTab(true);
+    }
+  }, [compressedSvg, hasAutoSwitchedTab, setActiveTab]);
+
+  return [hasAutoSwitchedTab, setHasAutoSwitchedTab] as const;
+}
+
+// Header component with stats and actions
+function OptimizeHeader({
+  fileName,
+  originalSize,
+  compressedSize,
+  compressionRate,
+  compressedSvg,
+  onCopy,
+  onDownload,
+}: {
+  fileName: string;
+  originalSize: number;
+  compressedSize: number;
+  compressionRate: number;
+  compressedSvg: string;
+  onCopy: () => void;
+  onDownload: () => void;
+}) {
+  return (
+    <div className="border-b bg-muted/30 p-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-bold text-2xl">Optimize SVG</h1>
+          <p className="text-muted-foreground text-sm">{fileName}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="text-right text-sm">
+            <div className="text-muted-foreground">
+              {formatBytes(originalSize)} → {formatBytes(compressedSize)}
+            </div>
+            {compressionRate > 0 && (
+              <div className="font-medium text-primary">
+                -{compressionRate.toFixed(1)}%
+              </div>
+            )}
+          </div>
+          <Button
+            disabled={!compressedSvg}
+            onClick={onCopy}
+            type="button"
+            variant="outline"
+          >
+            <span className="i-hugeicons-copy-01 mr-2 size-4" />
+            Copy
+          </Button>
+          <Button disabled={!compressedSvg} onClick={onDownload} type="button">
+            <span className="i-hugeicons-download-01 mr-2 size-4" />
+            Download
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Code tab content component
+function CodeTabContent({
+  activeTab,
+  generatedCodes,
+  componentName,
+}: {
+  activeTab: string;
+  generatedCodes: Map<string, string>;
+  componentName: string;
+}) {
+  const codeTabConfig: Record<
+    string,
+    { ext: string; language: SupportedLanguage }
+  > = {
+    "react-jsx": { ext: "jsx", language: "javascript" },
+    "react-tsx": { ext: "tsx", language: "typescript" },
+    vue: { ext: "vue", language: "html" },
+    svelte: { ext: "svelte", language: "html" },
+    "react-native": { ext: "jsx", language: "javascript" },
+    flutter: { ext: "dart", language: "dart" },
+  };
+
+  const config = codeTabConfig[activeTab as keyof typeof codeTabConfig];
+  if (!config) {
+    return null;
+  }
+
+  const code = generatedCodes.get(activeTab);
+  if (!code) {
+    return (
+      <div className="flex h-full items-center justify-center text-muted-foreground">
+        Generating code...
+      </div>
+    );
+  }
+
+  return (
+    <CodeViewer
+      code={code}
+      fileName={`${componentName}.${config.ext}`}
+      language={config.language}
+    />
+  );
+}
+
+function OptimizeComponent() {
+  const {
+    originalSvg,
+    compressedSvg,
+    fileName,
+    plugins,
+    globalSettings,
+    setOriginalSvg,
+    setCompressedSvg,
+  } = useSvgStore();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [activeTab, setActiveTab] = useState("original");
+
+  const [_hasAutoSwitchedTab, setHasAutoSwitchedTab] = useAutoTabSwitch(
+    compressedSvg,
+    setActiveTab
+  );
+
+  const handleFileUpload = useCallback(
+    async (file: File) => {
+      const content = await readFileAsText(file);
+      setOriginalSvg(content, file.name);
+      setHasAutoSwitchedTab(false);
+      toast.success("SVG file uploaded successfully!");
+    },
+    [setOriginalSvg, setHasAutoSwitchedTab]
+  );
+
+  const isDragging = useDragAndDrop();
+  usePasteHandler(setOriginalSvg, setHasAutoSwitchedTab);
+
+  const prettifiedOriginal = usePrettifiedSvg(
+    originalSvg,
+    globalSettings.prettifyMarkup
+  );
+  const prettifiedCompressed = usePrettifiedSvg(
+    compressedSvg,
+    globalSettings.prettifyMarkup
+  );
+
+  useAutoCompress(originalSvg, plugins, globalSettings, setCompressedSvg);
+
+  const componentName = useMemo(() => getComponentName(fileName), [fileName]);
+  const generatedCodes = useCodeGeneration(activeTab, compressedSvg, fileName);
 
   const handleCopy = async () => {
     try {
@@ -235,43 +391,15 @@ function OptimizeComponent() {
   return (
     <div className="flex h-[calc(100vh-4rem)]">
       <div className="flex flex-1 flex-col overflow-hidden">
-        <div className="border-b bg-muted/30 p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="font-bold text-2xl">Optimize SVG</h1>
-              <p className="text-muted-foreground text-sm">{fileName}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="text-right text-sm">
-                <div className="text-muted-foreground">
-                  {formatBytes(originalSize)} → {formatBytes(compressedSize)}
-                </div>
-                {compressionRate > 0 && (
-                  <div className="font-medium text-primary">
-                    -{compressionRate.toFixed(1)}%
-                  </div>
-                )}
-              </div>
-              <Button
-                disabled={!compressedSvg}
-                onClick={handleCopy}
-                type="button"
-                variant="outline"
-              >
-                <span className="i-hugeicons-copy-01 mr-2 size-4" />
-                Copy
-              </Button>
-              <Button
-                disabled={!compressedSvg}
-                onClick={handleDownload}
-                type="button"
-              >
-                <span className="i-hugeicons-download-01 mr-2 size-4" />
-                Download
-              </Button>
-            </div>
-          </div>
-        </div>
+        <OptimizeHeader
+          compressedSize={compressedSize}
+          compressedSvg={compressedSvg}
+          compressionRate={compressionRate}
+          fileName={fileName}
+          onCopy={handleCopy}
+          onDownload={handleDownload}
+          originalSize={originalSize}
+        />
 
         <div className="flex-1 overflow-hidden p-4">
           {originalSvg ? (
@@ -338,110 +466,26 @@ function OptimizeComponent() {
                 )}
               </TabsContent>
 
-              {/* React JSX */}
-              <TabsContent
-                className="mt-0 flex-1 overflow-hidden"
-                value="react-jsx"
-              >
-                {generatedCodes.get("react-jsx") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("react-jsx") || ""}
-                    fileName={`${componentName}.jsx`}
-                    language="javascript"
+              {[
+                "react-jsx",
+                "react-tsx",
+                "vue",
+                "svelte",
+                "react-native",
+                "flutter",
+              ].map((tab) => (
+                <TabsContent
+                  className="mt-0 flex-1 overflow-hidden"
+                  key={tab}
+                  value={tab}
+                >
+                  <CodeTabContent
+                    activeTab={tab}
+                    componentName={componentName}
+                    generatedCodes={generatedCodes}
                   />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating React JSX code...
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* React TSX */}
-              <TabsContent
-                className="mt-0 flex-1 overflow-hidden"
-                value="react-tsx"
-              >
-                {generatedCodes.get("react-tsx") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("react-tsx") || ""}
-                    fileName={`${componentName}.tsx`}
-                    language="typescript"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating React TSX code...
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* Vue */}
-              <TabsContent className="mt-0 flex-1 overflow-hidden" value="vue">
-                {generatedCodes.get("vue") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("vue") || ""}
-                    fileName={`${componentName}.vue`}
-                    language="html"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating Vue code...
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* Svelte */}
-              <TabsContent
-                className="mt-0 flex-1 overflow-hidden"
-                value="svelte"
-              >
-                {generatedCodes.get("svelte") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("svelte") || ""}
-                    fileName={`${componentName}.svelte`}
-                    language="html"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating Svelte code...
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* React Native */}
-              <TabsContent
-                className="mt-0 flex-1 overflow-hidden"
-                value="react-native"
-              >
-                {generatedCodes.get("react-native") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("react-native") || ""}
-                    fileName={`${componentName}.jsx`}
-                    language="javascript"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating React Native code...
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* Flutter */}
-              <TabsContent
-                className="mt-0 flex-1 overflow-hidden"
-                value="flutter"
-              >
-                {generatedCodes.get("flutter") ? (
-                  <CodeViewer
-                    code={generatedCodes.get("flutter") || ""}
-                    fileName={`${componentName}.dart`}
-                    language="dart"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-muted-foreground">
-                    Generating Flutter code...
-                  </div>
-                )}
-              </TabsContent>
+                </TabsContent>
+              ))}
             </Tabs>
           ) : (
             <div className="flex h-full items-center justify-center">

@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/file-utils";
-import { prettifyCode } from "@/lib/prettify-code";
+import { prettifyCode, type SupportedLanguage } from "@/lib/prettify-code";
 
 type CodeViewerProps = {
   code: string;
-  language: "javascript" | "typescript" | "html" | "dart";
+  language: SupportedLanguage;
   fileName: string;
 };
 

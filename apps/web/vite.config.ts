@@ -13,8 +13,8 @@ export default defineConfig(({ mode }) => ({
         persistState: true,
       }),
     tsconfigPaths(),
-    tailwindcss(),
     tanstackStart(),
     viteReact(),
+    tailwindcss(),
   ].filter(Boolean),
 }));

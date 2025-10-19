@@ -1,5 +1,6 @@
 import {
   createRootRouteWithContext,
+  HeadContent,
   Outlet,
   Scripts,
   useRouterState,
@@ -8,13 +9,32 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "next-themes";
 import Loader from "@/components/loader";
 import { Toaster } from "@/components/ui/sonner";
+import appCss from "@/styles.css?url";
 import Header from "../components/header";
-import "../index.css";
 
 export type RouterAppContext = Record<string, never>;
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootDocument,
+  head: () => ({
+    meta: [
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "React TanStarter",
+      },
+      {
+        name: "description",
+        content: "A minimal starter template for 🏝️ TanStack Start.",
+      },
+    ],
+    links: [{ rel: "stylesheet", href: appCss }],
+  }),
 });
 
 function RootDocument() {
@@ -22,9 +42,7 @@ function RootDocument() {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta charSet="utf-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <title>Tiny SVG</title>
+        <HeadContent />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

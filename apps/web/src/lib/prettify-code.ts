@@ -1,10 +1,11 @@
+import type { Plugin } from "prettier";
 import * as parserBabel from "prettier/plugins/babel";
 import * as parserEstree from "prettier/plugins/estree";
 import * as parserHtml from "prettier/plugins/html";
 import * as parserTypescript from "prettier/plugins/typescript";
 import * as prettier from "prettier/standalone";
 
-type SupportedLanguage = "javascript" | "typescript" | "html" | "dart";
+export type SupportedLanguage = "javascript" | "typescript" | "html" | "dart";
 
 /**
  * Prettify code using Prettier
@@ -25,7 +26,10 @@ export async function prettifyCode(
     dart: "",
   };
 
-  const pluginsMap: Record<SupportedLanguage, unknown[]> = {
+  const pluginsMap: Record<
+    SupportedLanguage,
+    Array<string | URL | Plugin<any> | any>
+  > = {
     javascript: [parserBabel, parserEstree],
     typescript: [parserTypescript, parserEstree],
     html: [parserHtml],
