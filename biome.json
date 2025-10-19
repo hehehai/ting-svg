@@ -23,7 +23,9 @@
       "!**/index.css"
     ]
   },
-  "extends": ["ultracite"],
+  "extends": [
+    "ultracite"
+  ],
   "linter": {
     "rules": {
       "nursery": {
@@ -35,14 +37,16 @@
         "noHeadElement": "off"
       },
       "performance": {
-        "noNamespaceImport": "off"
+        "noNamespaceImport": "off",
+        "noBarrelFile": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
       },
       "suspicious": {
         "noExplicitAny": "off",
-        "useAwait": "off"
+        "useAwait": "off",
+        "noUnknownAtRules": "off"
       }
     }
   }
