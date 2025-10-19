@@ -46,7 +46,7 @@ async function prettifyContent(
 
   const pluginsMap: Record<
     SupportedLanguage,
-    Array<string | URL | Plugin<any>>
+    Array<string | URL | Plugin<any> | any>
   > = {
     javascript: [parserBabel, parserEstree],
     typescript: [parserTypescript, parserEstree],

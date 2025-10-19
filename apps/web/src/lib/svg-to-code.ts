@@ -170,7 +170,11 @@ export function processSvg(svgString: string): {
   let processed = svgString;
 
   // Replace color if only one unique color
-  if (shouldUseCurrentColor && uniqueColors.length === 1) {
+  if (
+    shouldUseCurrentColor &&
+    uniqueColors.length === 1 &&
+    uniqueColors[0] === "currentColor"
+  ) {
     processed = replaceColors(processed, uniqueColors[0]);
   }
 

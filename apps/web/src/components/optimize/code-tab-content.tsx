@@ -1,5 +1,6 @@
-import { CodeViewer } from "@/components/code-viewer";
-import type { SupportedLanguage } from "@/lib/prettify-code";
+import { CodeViewerLazy } from "@/components/lazy/code-viewer-lazy";
+
+type SupportedLanguage = "javascript" | "typescript" | "html" | "dart";
 
 interface CodeTabContentProps {
   activeTab: string;
@@ -39,7 +40,7 @@ export function CodeTabContent({
   }
 
   return (
-    <CodeViewer
+    <CodeViewerLazy
       code={code}
       fileName={`${componentName}.${config.ext}`}
       language={config.language}

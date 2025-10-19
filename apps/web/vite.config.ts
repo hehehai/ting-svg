@@ -17,4 +17,34 @@ export default defineConfig(({ mode }) => ({
     viteReact(),
     tailwindcss(),
   ].filter(Boolean),
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Monaco Editor - very large dependency (~500KB)
+          if (
+            id.includes("@monaco-editor/react") ||
+            id.includes("monaco-editor")
+          ) {
+            return "monaco";
+          }
+          // Prettier - large dependency (~1.2MB with parsers)
+          if (
+            id.includes("prettier/standalone") ||
+            id.includes("prettier/plugins")
+          ) {
+            return "prettier";
+          }
+          // SVGO - large SVG optimizer (~550KB)
+          if (id.includes("svgo")) {
+            return "svgo";
+          }
+          // Radix UI components
+          if (id.includes("@radix-ui")) {
+            return "ui";
+          }
+        },
+      },
+    },
+  },
 }));

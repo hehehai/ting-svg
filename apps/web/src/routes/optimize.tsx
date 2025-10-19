@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { CodeDiffViewer } from "@/components/code-diff-viewer";
-import { ConfigPanel } from "@/components/config-panel";
+import { CodeDiffViewerLazy } from "@/components/lazy/code-diff-viewer-lazy";
+import { ConfigPanelLazy } from "@/components/lazy/config-panel-lazy";
 import { CodeTabContent } from "@/components/optimize/code-tab-content";
 import { OptimizeHeader } from "@/components/optimize/optimize-header";
 import { SvgPreview } from "@/components/svg-preview";
@@ -163,7 +163,7 @@ function OptimizeComponent() {
 
               <TabsContent className="mt-0 flex-1 overflow-hidden" value="code">
                 {compressedSvg ? (
-                  <CodeDiffViewer
+                  <CodeDiffViewerLazy
                     language="html"
                     modified={prettifiedCompressed}
                     original={prettifiedOriginal}
@@ -208,7 +208,7 @@ function OptimizeComponent() {
         </div>
       </div>
 
-      <ConfigPanel
+      <ConfigPanelLazy
         className={isCollapsed ? "w-12 border-l p-2" : "w-80 border-l p-4"}
         isCollapsed={isCollapsed}
         onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
