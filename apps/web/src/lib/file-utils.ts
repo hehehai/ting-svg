@@ -92,8 +92,8 @@ const getSvgDimensions = (svg: string): { width: number; height: number } => {
   }
 
   // Try to get width and height attributes
-  let width = svgElement.getAttribute("width");
-  let height = svgElement.getAttribute("height");
+  let width: string | null = svgElement.getAttribute("width");
+  let height: string | null = svgElement.getAttribute("height");
 
   // If width/height are not present, try to get from viewBox
   if (!(width && height)) {
@@ -101,8 +101,8 @@ const getSvgDimensions = (svg: string): { width: number; height: number } => {
     if (viewBox) {
       const values = viewBox.split(VIEWBOX_SPLIT_PATTERN);
       if (values.length === VIEWBOX_VALUES_COUNT) {
-        width = values[2];
-        height = values[3];
+        width = values[2] ?? null;
+        height = values[3] ?? null;
       }
     }
   }

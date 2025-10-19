@@ -151,6 +151,9 @@ importers:
       jsdom:
         specifier: ^26.0.0
         version: 26.1.0
+      monaco-editor:
+        specifier: ^0.54.0
+        version: 0.54.0
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
