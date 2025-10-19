@@ -16,7 +16,7 @@ import { usePasteHandler } from "@/hooks/use-paste-handler";
 import { usePrettifiedSvg } from "@/hooks/use-prettified-svg";
 import { copyToClipboard, downloadSvg, readFileAsText } from "@/lib/file-utils";
 import { getComponentName } from "@/lib/svg-to-code";
-import { calculateCompressionRate } from "@/lib/svgo";
+import { calculateCompressionRate } from "@/lib/svgo-config";
 import { useSvgStore } from "@/store/svg-store";
 
 export const Route = createFileRoute("/optimize")({

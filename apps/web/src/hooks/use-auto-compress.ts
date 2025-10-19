@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { buildSvgoConfig } from "@/lib/svgo";
+import { buildSvgoConfig } from "@/lib/svgo-config";
 import type { SvgoGlobalSettings, SvgoPluginConfig } from "@/lib/svgo-plugins";
 import { svgoWorkerClient } from "@/lib/worker-utils/svgo-worker-client";
 

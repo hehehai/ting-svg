@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { formatBytes } from "@/lib/svgo";
+import { formatBytes } from "@/lib/svgo-config";
 
 interface OptimizeHeaderProps {
   fileName: string;

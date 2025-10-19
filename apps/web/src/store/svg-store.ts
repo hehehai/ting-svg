@@ -7,6 +7,9 @@ import {
   type SvgoPluginConfig,
 } from "@/lib/svgo-plugins";
 
+// Note: SvgoConfig type is imported but SVGO library is NOT bundled
+// SVGO is only used in workers (svgo.worker.ts)
+
 export type SvgState = {
   originalSvg: string;
   compressedSvg: string;

@@ -35,8 +35,8 @@ export default defineConfig(({ mode }) => ({
           ) {
             return "prettier";
           }
-          // SVGO - large SVG optimizer (~550KB)
-          if (id.includes("svgo")) {
+          // SVGO - only in workers, exclude from main bundle
+          if (id.includes("svgo") && !id.includes(".worker")) {
             return "svgo";
           }
           // Radix UI components

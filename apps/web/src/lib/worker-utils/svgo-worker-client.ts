@@ -3,14 +3,14 @@
  * Provides a Promise-based API for SVG optimization using Web Workers
  */
 
-import type { Config } from "svgo";
+import type { SvgoConfig } from "@/lib/svgo";
 import SvgoWorker from "@/workers/svgo.worker?worker&url";
 import { WorkerCache } from "./cache";
 import { WorkerManager } from "./worker-manager";
 
 interface SvgoRequest {
   svg: string;
-  config: Config;
+  config: SvgoConfig;
 }
 
 type SvgoResponse = string;
@@ -34,7 +34,7 @@ class SvgoWorkerClient {
   /**
    * Compress SVG using SVGO in a Web Worker
    */
-  async compress(svg: string, config: Config): Promise<string> {
+  async compress(svg: string, config: SvgoConfig): Promise<string> {
     // Check cache first
     const cacheKey = { svg, config };
     const cached = this.cache.get(cacheKey);

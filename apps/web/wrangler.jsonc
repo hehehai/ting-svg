@@ -1,19 +1,27 @@
 {
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "tiny-svg",
-	"main": "@tanstack/react-start/server-entry",
-	"compatibility_date": "2025-07-05",
-	"compatibility_flags": ["nodejs_compat"],
-	"assets": {
-		"directory": ".output/public"
-	},
-	"observability": {
-		"enabled": true
-	}
-	// "kv_namespaces": [
-	//   {
-	//     "binding": "CACHE",
-	//     "id": "<Your KV ID>",
-	//   },
-	// ],
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tiny-svg",
+  "main": "@tanstack/react-start/server-entry",
+  "compatibility_date": "2025-07-05",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".output/public"
+  },
+  "routes": [
+    {
+      "pattern": "tiny-svg.actnow.dev",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "CACHE",
+  //     "id": "<Your KV ID>",
+  //   },
+  // ],
 }
