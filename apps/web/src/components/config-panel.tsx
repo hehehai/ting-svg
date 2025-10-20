@@ -85,7 +85,7 @@ export function ConfigPanel({
         </Button>
       </div>
 
-      <div className="max-h-[calc(100vh-12rem)] space-y-4 overflow-y-auto">
+      <div className="max-h-[calc(100vh-9rem)] space-y-4 overflow-y-auto">
         {/* Global Settings */}
         <Card>
           <CardHeader>

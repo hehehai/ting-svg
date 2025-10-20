@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <div>
-      <div className="flex flex-row items-center justify-between px-4 py-3">
+      <div className="flex flex-row items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-8">
           <Link className="flex items-center gap-2 font-bold text-xl" to="/">
             <span className="i-hugeicons-image-compress size-6" />
@@ -61,7 +61,7 @@ export default function Header() {
           {mounted && (
             <button
               aria-label="Toggle theme"
-              className="rounded-md p-2 transition-colors hover:bg-accent"
+              className="flex items-center justify-center rounded-md p-2 transition-colors hover:bg-accent"
               onClick={cycleTheme}
               title={`Current theme: ${theme}`}
               type="button"
@@ -71,7 +71,7 @@ export default function Header() {
           )}
           <a
             aria-label="View on GitHub"
-            className="rounded-md p-2 transition-colors hover:bg-accent"
+            className="flex items-center justify-center rounded-md p-2 transition-colors hover:bg-accent"
             href="https://github.com/[username]/tiny-svg"
             rel="noopener noreferrer"
             target="_blank"
@@ -80,7 +80,6 @@ export default function Header() {
           </a>
         </div>
       </div>
-      <hr />
     </div>
   );
 }

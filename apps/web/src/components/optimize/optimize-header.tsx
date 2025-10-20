@@ -24,7 +24,7 @@ export function OptimizeHeader({
     <div className="border-b bg-muted/30 p-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-bold text-2xl">Optimize SVG</h1>
+          <h1 className="font-bold text-xl">Optimize SVG</h1>
           <p className="text-muted-foreground text-sm">{fileName}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -44,11 +44,11 @@ export function OptimizeHeader({
             type="button"
             variant="outline"
           >
-            <span className="i-hugeicons-copy-01 mr-2 size-4" />
+            <span className="i-hugeicons-copy-01 mr-1 size-4" />
             Copy
           </Button>
           <Button disabled={!compressedSvg} onClick={onDownload} type="button">
-            <span className="i-hugeicons-download-01 mr-2 size-4" />
+            <span className="i-hugeicons-download-01 mr-1 size-4" />
             Download
           </Button>
         </div>

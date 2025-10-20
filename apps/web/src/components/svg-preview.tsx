@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { cn } from "@/lib/utils";
 
 type SvgPreviewProps = {
@@ -51,7 +52,10 @@ const BACKGROUND_STYLES: Record<
 export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [backgroundStyle, setBackgroundStyle] =
-    useState<BackgroundStyle>("transparent-light");
+    useLocalStorage<BackgroundStyle>(
+      "svg-preview-background",
+      "transparent-light"
+    );
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
