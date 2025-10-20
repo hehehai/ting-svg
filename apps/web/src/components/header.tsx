@@ -72,7 +72,7 @@ export default function Header() {
           <a
             aria-label="View on GitHub"
             className="flex items-center justify-center rounded-md p-2 transition-colors hover:bg-accent"
-            href="https://github.com/[username]/tiny-svg"
+            href="https://github.com/hehehai/ting-svg"
             rel="noopener noreferrer"
             target="_blank"
           >

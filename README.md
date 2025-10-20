@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Tiny SVG Logo](./docs/images/logo.svg)
+![Tiny SVG Logo](./docs/images/logo.png)
 
 **A modern, lightning-fast SVG optimizer and code generator**
 
@@ -37,12 +37,12 @@
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](./docs/images/home.png)
+![Home Page](./docs/images/home.webp)
 
 Simple, intuitive interface to get started quickly.
 
 ### Optimize Page
-![Optimize Page](./docs/images/optimize.png)
+![Optimize Page](./docs/images/optimize.webp)
 
 Powerful optimization tools with real-time preview and code generation.
 
@@ -352,8 +352,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE
 ## 📞 Support
 
 - **Live Demo**: [https://tiny-svg.actnow.dev](https://tiny-svg.actnow.dev)
-- **Issues**: [GitHub Issues](https://github.com/your-username/tiny-svg/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/tiny-svg/discussions)
+- **Issues**: [GitHub Issues](https://github.com/hehehai/ting-svg/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/hehehai/ting-svg/discussions)
 
 ---
 
