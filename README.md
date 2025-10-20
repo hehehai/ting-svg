@@ -78,27 +78,33 @@ Open [http://localhost:3001](http://localhost:3001) in your browser.
 
 ### Build
 
-**⚠️ 重要提示：**for 本项目使用 TanStack Start (SSR 框架)，存在已知的 CSS 加载问题。production
+Build for production:
 
-### 推荐的工作流程
-
-1. **开发阶段** - 使用开发服务器（CSS 完全正常）：
 ```bash
-pnpm dev
-```
-访问 [http://localhost:3001](http://localhost:3001)
+# Build the application
+pnpm build
 
-2. **部署** - 直接部署到 Cloudflare（生产环境 CSS 正常）：
-```bash
-cd apps/web && pnpm deploy
+# Preview the production build locally
+pnpm preview
 ```
 
-###### 本地预览生产构建的问题Deployment
+Build output will be in `apps/web/.output/`:
+- `client/` - Static client assets
+- `server/` - Server-side code for SSR
 
-使用Deploy to Cloudflare Workers:
+### Code Quality
+
+Run linting and formatting:
 
 ```bash
-cd apps/web && pnpm deploy
+# Check for issues
+pnpm check
+
+# Format code with Biome
+pnpm format
+
+# Type check
+pnpm typecheck
 ```
 
 ---
@@ -282,35 +288,142 @@ export default defineConfig({
 
 ### Cloudflare Workers (Recommended)
 
+This project is optimized for Cloudflare Workers deployment with full SSR support.
+
+#### Prerequisites
+
+1. **Cloudflare Account**: Sign up at [cloudflare.com](https://cloudflare.com)
+2. **Wrangler CLI**: Already included in dependencies
+
+#### Setup
+
+1. **Login to Cloudflare**:
 ```bash
-# Build and deploy
+pnpm wrangler login
+```
+
+2. **Configure `wrangler.toml`** (already configured):
+```toml
+name = "tiny-svg"
+compatibility_date = "2024-01-01"
+main = ".output/server/index.mjs"
+assets = { directory = ".output/client" }
+
+[observability]
+enabled = true
+
+# Optional: Custom domain
+# routes = [
+#   { pattern = "tiny-svg.actnow.dev", custom_domain = true }
+# ]
+```
+
+3. **Deploy**:
+```bash
+# Build and deploy to production
+pnpm deploy
+
+# Or deploy from the web app directory
 cd apps/web
 pnpm deploy
 ```
 
-Your app will be deployed to: `https://your-app.workers.dev`
+Your app will be deployed to: `https://tiny-svg.workers.dev`
 
-### Custom Domain
+#### Custom Domain
 
-Configure in `wrangler.toml`:
+To use a custom domain:
 
+1. Add your domain to Cloudflare
+2. Update `wrangler.toml`:
 ```toml
-name = "tiny-svg"
-compatibility_date = "2024-01-01"
-
-[env.production]
 routes = [
-  { pattern = "tiny-svg.actnow.dev", custom_domain = true }
+  { pattern = "your-domain.com", custom_domain = true }
 ]
 ```
+3. Deploy: `pnpm deploy`
 
-### Environment Variables
+#### Environment Variables
 
-Create `.env` file in `apps/web/`:
+Set environment variables using Wrangler:
 
-```env
-# Optional: Analytics, error tracking, etc.
+```bash
+# Set a variable
+pnpm wrangler secret put VARIABLE_NAME
+
+# List all variables
+pnpm wrangler secret list
 ```
+
+Or use `.dev.vars` for local development:
+
+```bash
+# apps/web/.dev.vars
+VARIABLE_NAME=value
+```
+
+#### Deployment Best Practices
+
+- **Build locally first**: Run `pnpm build` to catch errors before deploying
+- **Test with preview**: Use `pnpm preview` to test the production build locally
+- **Check bundle size**: Monitor `dist/client/assets/` to ensure bundles are optimized
+- **Monitor logs**: Use `pnpm wrangler tail` to view real-time logs
+
+### Other Platforms
+
+#### Vercel
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+#### Netlify
+
+```bash
+# Install Netlify CLI
+npm i -g netlify-cli
+
+# Deploy
+netlify deploy --prod
+```
+
+#### Docker
+
+```bash
+# Build Docker image
+docker build -t tiny-svg .
+
+# Run container
+docker run -p 3001:3001 tiny-svg
+```
+
+### Build Output
+
+After running `pnpm build`, the output structure is:
+
+```
+apps/web/.output/
+├── client/               # Static assets
+│   ├── assets/          # JS/CSS bundles
+│   │   ├── index-*.js   # Main bundle (~15.79 KB)
+│   │   ├── monaco-*.js  # Monaco Editor (~500 KB)
+│   │   ├── prettier-*.js # Prettier (~200 KB)
+│   │   ├── svgo-*.js    # SVGO (~6 KB)
+│   │   └── ui-*.js      # UI components
+│   └── ...
+└── server/              # SSR server code
+    └── index.mjs        # Server entry point
+```
+
+**Bundle Optimization**:
+- Main route: 15.79 KB (97.4% reduction from 611.74 KB)
+- Code splitting: Monaco, Prettier, SVGO, and UI in separate chunks
+- Lazy loading: Components load on-demand
+- Web Workers: CPU-intensive tasks run in separate threads
 
 ---
 
