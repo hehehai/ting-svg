@@ -27,7 +27,7 @@ export const allSvgoPlugins: SvgoPluginConfig[] = [
   { name: "removeXMLProcInst", enabled: true },
   { name: "removeComments", enabled: true },
   { name: "removeMetadata", enabled: true },
-  { name: "removeXMLNS", enabled: false },
+  { name: "removeXMLNS", enabled: true },
   { name: "removeEditorsNSData", enabled: true },
   { name: "cleanupAttrs", enabled: true },
   { name: "mergeStyles", enabled: true },

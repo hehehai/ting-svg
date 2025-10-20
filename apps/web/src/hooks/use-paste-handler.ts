@@ -26,6 +26,10 @@ export function usePasteHandler(
                 setOriginalSvg(extracted, "pasted.svg");
                 setHasAutoSwitchedTab(false);
                 toast.success("SVG pasted successfully!");
+              } else {
+                toast.error(
+                  "Invalid SVG content. Please paste valid SVG code."
+                );
               }
             }
           });

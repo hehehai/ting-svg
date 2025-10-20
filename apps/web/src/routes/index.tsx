@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadBox } from "@/components/upload-box";
 import {
@@ -66,6 +67,10 @@ function HomeComponent() {
               if (extracted) {
                 setOriginalSvg(extracted, "pasted.svg");
                 navigate({ to: "/optimize" });
+              } else {
+                toast.error(
+                  "Invalid SVG content. Please paste valid SVG code."
+                );
               }
             }
           });
