@@ -41,7 +41,7 @@ export default function Header() {
       <div className="flex flex-row items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-8">
           <Link className="flex items-center gap-2 font-bold text-xl" to="/">
-            <span className="i-hugeicons-image-compress size-6" />
+            <span className="i-hugeicons-chef-hat size-6" />
             <span>Tiny SVG</span>
           </Link>
           <nav className="flex gap-6">
