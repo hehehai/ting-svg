@@ -68,10 +68,14 @@ pnpm install
 
 ### Development
 
-Start the development server:
+This is a **pnpm workspace** monorepo. Start the development server:
 
 ```bash
+# Start all workspace apps (runs in all apps/*)
 pnpm dev
+
+# Or start only the web app
+pnpm dev:web
 ```
 
 Open [http://localhost:3001](http://localhost:3001) in your browser.
@@ -81,11 +85,14 @@ Open [http://localhost:3001](http://localhost:3001) in your browser.
 Build for production:
 
 ```bash
-# Build the application
+# Build all workspace packages
 pnpm build
 
+# Or build only the web app
+pnpm --filter web build
+
 # Preview the production build locally
-pnpm preview
+pnpm --filter web serve
 ```
 
 Build output will be in `apps/web/.output/`:
@@ -97,14 +104,11 @@ Build output will be in `apps/web/.output/`:
 Run linting and formatting:
 
 ```bash
-# Check for issues
+# Check and fix issues (runs on entire workspace)
 pnpm check
 
-# Format code with Biome
-pnpm format
-
-# Type check
-pnpm typecheck
+# Type check all packages
+pnpm check-types
 ```
 
 ---
@@ -320,12 +324,8 @@ enabled = true
 
 3. **Deploy**:
 ```bash
-# Build and deploy to production
-pnpm deploy
-
-# Or deploy from the web app directory
-cd apps/web
-pnpm deploy
+# Deploy the web app (builds and deploys automatically)
+pnpm --filter web deploy
 ```
 
 Your app will be deployed to: `https://tiny-svg.workers.dev`
@@ -364,10 +364,10 @@ VARIABLE_NAME=value
 
 #### Deployment Best Practices
 
-- **Build locally first**: Run `pnpm build` to catch errors before deploying
-- **Test with preview**: Use `pnpm preview` to test the production build locally
-- **Check bundle size**: Monitor `dist/client/assets/` to ensure bundles are optimized
-- **Monitor logs**: Use `pnpm wrangler tail` to view real-time logs
+- **Build locally first**: Run `pnpm --filter web build` to catch errors before deploying
+- **Test with preview**: Use `pnpm --filter web serve` to test the production build locally
+- **Check bundle size**: Monitor `apps/web/.output/client/assets/` to ensure bundles are optimized
+- **Monitor logs**: Use `pnpm --filter web wrangler tail` to view real-time logs
 
 ### Other Platforms
 
