@@ -33,7 +33,103 @@ function AboutComponent() {
 
       <section className="mb-8">
         <h2 className="mb-4 font-semibold text-2xl">Author</h2>
-        <p className="text-muted-foreground">Created by [Author Name]</p>
+        <p className="text-muted-foreground">
+          Created by{" "}
+          <a href="https://hehehai.cn" rel="noopener" target="_blankÏ">
+            [hehehai]
+          </a>
+        </p>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="mb-4 font-semibold text-2xl">
+          Third-Party Dependencies
+        </h2>
+        <p className="mb-4 text-muted-foreground">
+          This project is built with amazing open source libraries:
+        </p>
+        <div className="grid gap-3">
+          <a
+            className="text-primary hover:underline"
+            href="https://github.com/svg/svgo"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            SVGO - SVG optimization library
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://tanstack.com/router"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            TanStack Router - Type-safe routing
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://tanstack.com/start"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            TanStack Start - Full-stack React framework
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://react.dev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            React - UI library
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://www.radix-ui.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Radix UI - Accessible component primitives
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://microsoft.github.io/monaco-editor"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Monaco Editor - Code editor
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://prettier.io"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Prettier - Code formatter
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://tailwindcss.com"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Tailwind CSS - Utility-first CSS framework
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://biomejs.dev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Biome - Fast linter and formatter
+          </a>
+          <a
+            className="text-primary hover:underline"
+            href="https://vite.dev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Vite - Build tool
+          </a>
+        </div>
       </section>
 
       <section>
@@ -43,7 +139,7 @@ function AboutComponent() {
         </p>
         <a
           className="inline-flex items-center gap-2 text-primary hover:underline"
-          href="https://github.com/[username]/tiny-svg"
+          href="https://github.com/hehehai/ting-svg"
           rel="noopener noreferrer"
           target="_blank"
         >
