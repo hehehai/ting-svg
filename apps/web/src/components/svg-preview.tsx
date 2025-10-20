@@ -14,8 +14,44 @@ const MIN_ZOOM = 10;
 const ZOOM_STEP = 10;
 const ZOOM_SCALE_DIVISOR = 100;
 
+type BackgroundStyle =
+  | "transparent-light"
+  | "transparent-dark"
+  | "solid-light"
+  | "solid-dark";
+
+const BACKGROUND_STYLES: Record<
+  BackgroundStyle,
+  { label: string; className: string; icon: string }
+> = {
+  "transparent-light": {
+    label: "Transparent Light",
+    className:
+      "bg-[linear-gradient(45deg,#f0f0f0_25%,transparent_25%,transparent_75%,#f0f0f0_75%,#f0f0f0),linear-gradient(45deg,#f0f0f0_25%,transparent_25%,transparent_75%,#f0f0f0_75%,#f0f0f0)] bg-[length:20px_20px] bg-[position:0_0,10px_10px]",
+    icon: "i-hugeicons-grid",
+  },
+  "transparent-dark": {
+    label: "Transparent Dark",
+    className:
+      "bg-[linear-gradient(45deg,#333_25%,transparent_25%,transparent_75%,#333_75%,#333),linear-gradient(45deg,#333_25%,transparent_25%,transparent_75%,#333_75%,#333)] bg-[length:20px_20px] bg-[position:0_0,10px_10px] bg-gray-900",
+    icon: "i-hugeicons-grid",
+  },
+  "solid-light": {
+    label: "Solid Light",
+    className: "bg-white",
+    icon: "i-hugeicons-sun-03",
+  },
+  "solid-dark": {
+    label: "Solid Dark",
+    className: "bg-gray-900",
+    icon: "i-hugeicons-moon-02",
+  },
+};
+
 export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const [backgroundStyle, setBackgroundStyle] =
+    useState<BackgroundStyle>("transparent-light");
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
@@ -27,6 +63,18 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
 
   const handleZoomReset = () => {
     setZoom(DEFAULT_ZOOM);
+  };
+
+  const cycleBackground = () => {
+    const styles: BackgroundStyle[] = [
+      "transparent-light",
+      "transparent-dark",
+      "solid-light",
+      "solid-dark",
+    ];
+    const currentIndex = styles.indexOf(backgroundStyle);
+    const nextIndex = (currentIndex + 1) % styles.length;
+    setBackgroundStyle(styles[nextIndex]);
   };
 
   if (!svg) {
@@ -47,6 +95,18 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
       <div className="flex items-center justify-between border-b bg-muted/30 p-2">
         <h3 className="font-medium text-sm">{title}</h3>
         <div className="flex items-center gap-1">
+          <Button
+            onClick={cycleBackground}
+            size="sm"
+            title={BACKGROUND_STYLES[backgroundStyle].label}
+            type="button"
+            variant="outline"
+          >
+            <i
+              className={cn(BACKGROUND_STYLES[backgroundStyle].icon, "size-4")}
+            />
+          </Button>
+          <div className="mx-1 h-4 w-px bg-border" />
           <Button
             disabled={zoom <= MIN_ZOOM}
             onClick={handleZoomOut}
@@ -81,7 +141,12 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
           </Button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto bg-muted/30 p-4">
+      <div
+        className={cn(
+          "flex-1 overflow-auto p-4",
+          BACKGROUND_STYLES[backgroundStyle].className
+        )}
+      >
         <div className="flex min-h-full items-center justify-center">
           <div
             className="origin-center transition-transform"

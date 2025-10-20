@@ -26,11 +26,18 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "React TanStarter",
+        title:
+          "Tiny SVG - Optimize Tiny SVGs & Convert React, Vue, and Svelte Code",
       },
       {
         name: "description",
-        content: "A minimal starter template for 🏝️ TanStack Start.",
+        content:
+          "Optimize Tiny SVGs with our online tool! Effortlessly convert your React, Vue, and Svelte code into compact and efficient SVGs. Improve your website's performance and loading speed while maintaining high-quality graphics. Try it now for free!",
+      },
+      {
+        name: "keywords",
+        content:
+          "optimize tiny SVGs, online SVG tool, convert React to SVG, convert Vue to SVG, convert Svelte to SVG, compact SVGs, efficient SVGs, improve website performance, website loading speed",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
