@@ -10,9 +10,9 @@ type SvgPreviewProps = {
 };
 
 const DEFAULT_ZOOM = 100;
-const MAX_ZOOM = 200;
-const MIN_ZOOM = 10;
-const ZOOM_STEP = 10;
+const MAX_ZOOM = 400;
+const MIN_ZOOM = 20;
+const ZOOM_STEP = 20;
 const ZOOM_SCALE_DIVISOR = 100;
 
 type BackgroundStyle =
@@ -78,7 +78,9 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
     ];
     const currentIndex = styles.indexOf(backgroundStyle);
     const nextIndex = (currentIndex + 1) % styles.length;
-    setBackgroundStyle(styles[nextIndex]);
+    if (styles[nextIndex]) {
+      setBackgroundStyle(styles[nextIndex]);
+    }
   };
 
   if (!svg) {
@@ -119,7 +121,7 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
             type="button"
             variant="outline"
           >
-            <i className="i-hugeicons-zoom-out size-4" />
+            <i className="i-hugeicons-zoom-out-area size-4" />
           </Button>
           <span className="min-w-12 px-2 text-center text-muted-foreground text-xs">
             {zoom}%
@@ -132,7 +134,7 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
             type="button"
             variant="outline"
           >
-            <i className="i-hugeicons-zoom-in size-4" />
+            <i className="i-hugeicons-zoom-in-area size-4" />
           </Button>
           <Button
             onClick={handleZoomReset}
@@ -141,7 +143,7 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
             type="button"
             variant="outline"
           >
-            <i className="i-hugeicons-reset size-4" />
+            <i className="i-hugeicons-image-actual-size size-4" />
           </Button>
         </div>
       </div>
