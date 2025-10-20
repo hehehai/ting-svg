@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Tiny SVG Logo](./docs/images/logo.png)
+<img src="./docs/images/logo.png" alt="Tiny SVG Logo" width="120" height="120" />
 
 **A modern, lightning-fast SVG optimizer and code generator**
 
