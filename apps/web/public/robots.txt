@@ -1,3 +1,12 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Disallow admin routes (if any in future)
+# Disallow: /admin/
+
+# Sitemaps
+Sitemap: https://tiny-svg.com/sitemap.xml
+
+# Crawl delay (optional, adjust if needed)
+# Crawl-delay: 1

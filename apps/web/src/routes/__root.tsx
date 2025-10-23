@@ -27,29 +27,126 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       },
       {
         title:
-          "Tiny SVG - Optimize Tiny SVGs & Convert React, Vue, and Svelte Code",
+          "Tiny SVG - Optimize SVGs & Convert to React, Vue, Svelte Components",
       },
       {
         name: "description",
         content:
-          "Optimize Tiny SVGs with our online tool! Effortlessly convert your React, Vue, and Svelte code into compact and efficient SVGs. Improve your website's performance and loading speed while maintaining high-quality graphics. Try it now for free!",
+          "Free online SVG optimizer and converter. Compress SVG files up to 70%, convert to React, Vue, and Svelte components. All processing happens in your browser - secure and fast!",
       },
       {
         name: "keywords",
         content:
-          "optimize tiny SVGs, online SVG tool, convert React to SVG, convert Vue to SVG, convert Svelte to SVG, compact SVGs, efficient SVGs, improve website performance, website loading speed",
+          "SVG optimizer, SVG compressor, SVG to React, SVG to Vue, SVG to Svelte, minify SVG, optimize SVG online, SVG converter, web performance",
+      },
+      // Open Graph / Facebook
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        property: "og:url",
+        content: "https://tiny-svg.com/",
+      },
+      {
+        property: "og:title",
+        content: "Tiny SVG - Optimize SVGs & Convert to React, Vue, Svelte",
+      },
+      {
+        property: "og:description",
+        content:
+          "Free online SVG optimizer and converter. Compress SVG files up to 70%, convert to React, Vue, and Svelte components.",
+      },
+      {
+        property: "og:image",
+        content: "https://tiny-svg.com/og-image.png",
+      },
+      // Twitter
+      {
+        property: "twitter:card",
+        content: "summary_large_image",
+      },
+      {
+        property: "twitter:url",
+        content: "https://tiny-svg.com/",
+      },
+      {
+        property: "twitter:title",
+        content: "Tiny SVG - Optimize SVGs & Convert to React, Vue, Svelte",
+      },
+      {
+        property: "twitter:description",
+        content:
+          "Free online SVG optimizer and converter. Compress SVG files up to 70%, convert to React, Vue, and Svelte components.",
+      },
+      {
+        property: "twitter:image",
+        content: "https://tiny-svg.com/og-image.png",
+      },
+      // Additional SEO meta tags
+      {
+        name: "robots",
+        content: "index, follow",
+      },
+      {
+        name: "language",
+        content: "English",
+      },
+      {
+        name: "author",
+        content: "Tiny SVG",
+      },
+      {
+        name: "theme-color",
+        content: "#3b82f6",
       },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: "https://tiny-svg.com/" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "manifest", href: "/site.webmanifest" },
+    ],
   }),
 });
 
 function RootDocument() {
   const isFetching = useRouterState({ select: (s) => s.isLoading });
+
+  // Structured Data (JSON-LD) for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Tiny SVG",
+    url: "https://tiny-svg.com",
+    description:
+      "Free online SVG optimizer and converter. Compress SVG files up to 70%, convert to React, Vue, and Svelte components.",
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    featureList: [
+      "SVG optimization and compression",
+      "Convert SVG to React components",
+      "Convert SVG to Vue components",
+      "Convert SVG to Svelte components",
+      "Client-side processing for privacy",
+      "No file upload required",
+    ],
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          type="application/ld+json"
+        />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

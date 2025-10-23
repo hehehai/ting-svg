@@ -6,6 +6,51 @@ export const Route = createFileRoute("/blog/")({
     const posts = await getBlogPosts();
     return { posts };
   },
+  head: () => ({
+    meta: [
+      { title: "Blog - SVG Optimization Tips & Tutorials | Tiny SVG" },
+      {
+        name: "description",
+        content:
+          "Learn SVG optimization techniques, best practices, and tips for web performance. Free tutorials on SVG compression, conversion, and advanced techniques.",
+      },
+      {
+        name: "keywords",
+        content:
+          "SVG tutorial, SVG optimization, web performance, SVG best practices, SVG tips",
+      },
+      // Open Graph
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://tiny-svg.com/blog" },
+      {
+        property: "og:title",
+        content: "Blog - SVG Optimization Tips & Tutorials",
+      },
+      {
+        property: "og:description",
+        content:
+          "Learn SVG optimization techniques, best practices, and tips for web performance.",
+      },
+      { property: "og:image", content: "https://tiny-svg.com/og-image.png" },
+      // Twitter
+      { property: "twitter:card", content: "summary_large_image" },
+      { property: "twitter:url", content: "https://tiny-svg.com/blog" },
+      {
+        property: "twitter:title",
+        content: "Blog - SVG Optimization Tips & Tutorials",
+      },
+      {
+        property: "twitter:description",
+        content:
+          "Learn SVG optimization techniques, best practices, and tips for web performance.",
+      },
+      {
+        property: "twitter:image",
+        content: "https://tiny-svg.com/og-image.png",
+      },
+    ],
+    links: [{ rel: "canonical", href: "https://tiny-svg.com/blog" }],
+  }),
   component: BlogListPage,
 });
 

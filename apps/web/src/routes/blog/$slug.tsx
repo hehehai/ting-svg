@@ -15,6 +15,42 @@ export const Route = createFileRoute("/blog/$slug")({
     }
     return { post };
   },
+  head: ({ loaderData }) => {
+    if (!loaderData?.post) {
+      return {};
+    }
+
+    const { post } = loaderData;
+    const url = `https://tiny-svg.com/blog/${post.slug}`;
+    const imageUrl = post.metadata.cover || "https://tiny-svg.com/og-image.png";
+
+    return {
+      meta: [
+        { title: `${post.metadata.title} | Tiny SVG Blog` },
+        { name: "description", content: post.metadata.desc },
+        {
+          name: "keywords",
+          content:
+            "SVG optimization, SVG tutorial, web performance, SVG best practices",
+        },
+        // Open Graph
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        { property: "og:title", content: post.metadata.title },
+        { property: "og:description", content: post.metadata.desc },
+        { property: "og:image", content: imageUrl },
+        { property: "article:published_time", content: post.metadata.datetime },
+        { property: "article:author", content: "Tiny SVG Team" },
+        // Twitter
+        { property: "twitter:card", content: "summary_large_image" },
+        { property: "twitter:url", content: url },
+        { property: "twitter:title", content: post.metadata.title },
+        { property: "twitter:description", content: post.metadata.desc },
+        { property: "twitter:image", content: imageUrl },
+      ],
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: BlogDetailPage,
 });
 
@@ -30,6 +66,34 @@ function MdxWrapper({
 function BlogDetailPage() {
   const { post } = Route.useLoaderData();
   const [MdxComponent, setMdxComponent] = useState<any>(null);
+
+  // Structured Data for blog post
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.metadata.title,
+    description: post.metadata.desc,
+    image: post.metadata.cover || "https://tiny-svg.com/og-image.png",
+    datePublished: post.metadata.datetime,
+    dateModified: post.metadata.datetime,
+    author: {
+      "@type": "Organization",
+      name: "Tiny SVG Team",
+      url: "https://tiny-svg.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Tiny SVG",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://tiny-svg.com/logo.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://tiny-svg.com/blog/${post.slug}`,
+    },
+  };
 
   useEffect(() => {
     const compileMdx = async () => {
@@ -61,6 +125,12 @@ function BlogDetailPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+      {/* Structured Data */}
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        type="application/ld+json"
+      />
+
       <article className="container mx-auto max-w-4xl px-4 py-12">
         {/* Cover Image */}
         {post.metadata.cover && (
