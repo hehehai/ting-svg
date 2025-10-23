@@ -131,13 +131,13 @@ function BlogDetailPage() {
         type="application/ld+json"
       />
 
-      <article className="container mx-auto max-w-4xl px-4 py-12">
+      <article className="mx-auto w-full max-w-full px-4 py-8 md:max-w-4xl md:py-12">
         {/* Cover Image */}
         {post.metadata.cover && (
-          <div className="mb-12 overflow-hidden rounded-2xl shadow-2xl">
+          <div className="mb-8 overflow-hidden rounded-xl shadow-2xl md:mb-12 md:rounded-2xl">
             <img
               alt=""
-              className="h-[400px] w-full object-cover"
+              className="h-[200px] w-full object-cover md:h-[400px]"
               height={400}
               src={post.metadata.cover}
               width={1200}
@@ -146,12 +146,12 @@ function BlogDetailPage() {
         )}
 
         {/* Header */}
-        <header className="mb-12 border-gray-200 border-b pb-8 dark:border-gray-800">
-          <div className="mb-4 flex items-center gap-4">
-            <time className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-1.5 font-medium text-blue-700 text-sm dark:bg-blue-900/30 dark:text-blue-300">
+        <header className="mb-8 border-gray-200 border-b pb-6 md:mb-12 md:pb-8 dark:border-gray-800">
+          <div className="mb-3 flex items-center gap-4 md:mb-4">
+            <time className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1 font-medium text-blue-700 text-xs md:px-4 md:py-1.5 md:text-sm dark:bg-blue-900/30 dark:text-blue-300">
               <svg
                 aria-hidden="true"
-                className="size-4"
+                className="size-3 md:size-4"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}
@@ -166,16 +166,16 @@ function BlogDetailPage() {
               })}
             </time>
           </div>
-          <h1 className="mb-6 font-bold text-5xl text-gray-900 leading-tight tracking-tight dark:text-gray-100">
+          <h1 className="mb-4 font-bold text-3xl text-gray-900 leading-tight tracking-tight md:mb-6 md:text-5xl dark:text-gray-100">
             {post.metadata.title}
           </h1>
-          <p className="text-gray-600 text-xl leading-relaxed dark:text-gray-400">
+          <p className="text-base text-gray-600 leading-relaxed md:text-xl dark:text-gray-400">
             {post.metadata.desc}
           </p>
         </header>
 
         {/* Content */}
-        <div className="mx-auto max-w-3xl">
+        <div className="prose prose-lg blog-content mx-auto w-full max-w-full overflow-x-hidden md:max-w-3xl">
           {MdxComponent ? (
             <MdxWrapper Component={MdxComponent} />
           ) : (
@@ -191,15 +191,15 @@ function BlogDetailPage() {
         </div>
 
         {/* Footer */}
-        <footer className="mx-auto mt-16 max-w-3xl border-gray-200 border-t pt-8 dark:border-gray-800">
+        <footer className="mx-auto mt-12 w-full max-w-full border-gray-200 border-t pt-6 md:mt-16 md:max-w-3xl md:pt-8 dark:border-gray-800">
           <div className="flex items-center justify-between">
             <a
-              className="inline-flex items-center gap-2 text-gray-600 transition-colors hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
+              className="inline-flex items-center gap-2 text-gray-600 text-sm transition-colors hover:text-blue-600 md:text-base dark:text-gray-400 dark:hover:text-blue-400"
               href="/blog"
             >
               <svg
                 aria-hidden="true"
-                className="size-5"
+                className="size-4 md:size-5"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={2}

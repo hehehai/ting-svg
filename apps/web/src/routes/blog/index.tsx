@@ -58,13 +58,13 @@ function BlogListPage() {
   const { posts } = Route.useLoaderData();
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12">
-      <h1 className="mb-8 font-bold text-4xl">Blog</h1>
+    <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
+      <h1 className="mb-6 font-bold text-3xl md:mb-8 md:text-4xl">Blog</h1>
 
       {posts.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-400">No blog posts found.</p>
       ) : (
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           {posts.map((post) => (
             <article
               className="overflow-hidden rounded-lg border border-gray-200 transition-shadow hover:shadow-lg dark:border-gray-800"
@@ -80,14 +80,14 @@ function BlogListPage() {
                 {post.metadata.cover && (
                   <img
                     alt=""
-                    className="h-48 w-full object-cover"
+                    className="h-40 w-full object-cover md:h-48"
                     height={192}
                     src={post.metadata.cover}
                     width={800}
                   />
                 )}
-                <div className="p-6">
-                  <time className="text-gray-600 text-sm dark:text-gray-400">
+                <div className="p-4 md:p-6">
+                  <time className="text-gray-600 text-xs md:text-sm dark:text-gray-400">
                     {new Date(post.metadata.datetime).toLocaleDateString(
                       "en-US",
                       {
@@ -97,13 +97,13 @@ function BlogListPage() {
                       }
                     )}
                   </time>
-                  <h2 className="mt-2 mb-3 font-bold text-2xl">
+                  <h2 className="mt-2 mb-2 font-bold text-xl md:mb-3 md:text-2xl">
                     {post.metadata.title}
                   </h2>
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 text-sm md:text-base dark:text-gray-300">
                     {post.metadata.desc}
                   </p>
-                  <div className="mt-4 text-blue-600 hover:underline dark:text-blue-400">
+                  <div className="mt-3 text-blue-600 text-sm hover:underline md:mt-4 md:text-base dark:text-blue-400">
                     Read more →
                   </div>
                 </div>

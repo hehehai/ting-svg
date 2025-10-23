@@ -4,35 +4,35 @@ export const mdxComponents = {
   // Headings
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1
-      className="group relative mt-12 mb-6 scroll-mt-20 font-bold text-4xl text-gray-900 tracking-tight dark:text-gray-100"
+      className="group relative mt-8 mb-4 scroll-mt-20 font-bold text-2xl text-gray-900 tracking-tight md:mt-12 md:mb-6 md:text-4xl dark:text-gray-100"
       {...props}
     />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className="group relative mt-10 mb-5 scroll-mt-20 border-gray-200 border-b pb-3 font-bold text-3xl text-gray-900 tracking-tight dark:border-gray-800 dark:text-gray-100"
+      className="group relative mt-8 mb-4 scroll-mt-20 border-gray-200 border-b pb-2 font-bold text-gray-900 text-xl tracking-tight md:mt-10 md:mb-5 md:pb-3 md:text-3xl dark:border-gray-800 dark:text-gray-100"
       {...props}
     >
       {props.children}
-      <span className="-left-6 absolute top-0 text-blue-500 opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="-left-6 absolute top-0 hidden text-blue-500 opacity-0 transition-opacity group-hover:opacity-100 md:inline">
         #
       </span>
     </h2>
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3
-      className="group relative mt-8 mb-4 scroll-mt-20 font-semibold text-2xl text-gray-900 dark:text-gray-100"
+      className="group relative mt-6 mb-3 scroll-mt-20 font-semibold text-gray-900 text-lg md:mt-8 md:mb-4 md:text-2xl dark:text-gray-100"
       {...props}
     >
       {props.children}
-      <span className="-left-5 absolute top-0 text-blue-500 text-xl opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="-left-5 absolute top-0 hidden text-blue-500 text-xl opacity-0 transition-opacity group-hover:opacity-100 md:inline">
         #
       </span>
     </h3>
   ),
   h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h4
-      className="mt-6 mb-3 font-semibold text-gray-900 text-xl dark:text-gray-100"
+      className="mt-5 mb-2 font-semibold text-base text-gray-900 md:mt-6 md:mb-3 md:text-xl dark:text-gray-100"
       {...props}
     />
   ),
@@ -40,7 +40,7 @@ export const mdxComponents = {
   // Paragraphs
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
-      className="my-6 text-gray-700 text-lg leading-[1.8] dark:text-gray-300"
+      className="my-4 text-base text-gray-700 leading-[1.7] md:my-6 md:text-lg md:leading-[1.8] dark:text-gray-300"
       {...props}
     />
   ),
@@ -60,13 +60,13 @@ export const mdxComponents = {
   // Lists
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul
-      className="my-8 space-y-3 text-gray-700 dark:text-gray-300"
+      className="my-6 space-y-2 text-gray-700 md:my-8 md:space-y-3 dark:text-gray-300"
       {...props}
     />
   ),
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
     <ol
-      className="my-8 ml-6 space-y-3 text-gray-700 dark:text-gray-300"
+      className="my-6 ml-6 space-y-2 text-gray-700 md:my-8 md:space-y-3 dark:text-gray-300"
       {...props}
     />
   ),
@@ -88,11 +88,11 @@ export const mdxComponents = {
   // Blockquote
   blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="my-8 border-blue-500 border-l-4 bg-gradient-to-r from-blue-50/80 to-transparent py-4 pr-6 pl-6 text-gray-800 italic dark:border-blue-400 dark:from-blue-950/30 dark:text-gray-200"
+      className="my-6 border-blue-500 border-l-4 bg-gradient-to-r from-blue-50/80 to-transparent py-3 pr-4 pl-4 text-gray-800 italic md:my-8 md:py-4 md:pr-6 md:pl-6 dark:border-blue-400 dark:from-blue-950/30 dark:text-gray-200"
       {...props}
     >
       <div className="relative">
-        <span className="-left-2 -top-2 absolute font-serif text-4xl text-blue-500/20 dark:text-blue-400/20">
+        <span className="-left-1 -top-1 md:-left-2 md:-top-2 absolute font-serif text-3xl text-blue-500/20 md:text-4xl dark:text-blue-400/20">
           "
         </span>
         {props.children}
@@ -128,14 +128,14 @@ export const mdxComponents = {
         : "text";
 
     return (
-      <div className="group/pre relative my-8">
+      <div className="group/pre relative my-6 w-[calc(100vw-2rem)] max-w-[calc(100vw+2rem)] rounded-xl md:mx-0 md:my-8 md:w-full md:max-w-full">
         {/* Header with language badge and copy button */}
-        <div className="flex items-center justify-between rounded-t-xl border border-gray-200 border-b-0 bg-gradient-to-r from-gray-100 to-gray-50 px-4 py-2.5 dark:border-gray-700 dark:from-gray-800 dark:to-gray-850">
+        <div className="flex w-full items-center justify-between rounded-t-none border border-gray-200 border-b-0 bg-gradient-to-r from-gray-100 to-gray-50 px-3 py-2 md:rounded-t-lg md:px-4 md:py-2.5 dark:border-gray-700 dark:from-gray-800 dark:to-gray-850">
           {/* Language badge */}
           {language && (
-            <div className="flex items-center gap-2">
-              <div className="size-2 rounded-full bg-blue-500" />
-              <span className="font-mono font-semibold text-gray-700 text-xs uppercase tracking-wide dark:text-gray-300">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <div className="size-1.5 rounded-full bg-blue-500 md:size-2" />
+              <span className="font-mono font-semibold text-[10px] text-gray-700 uppercase tracking-wide md:text-xs dark:text-gray-300">
                 {language}
               </span>
             </div>
@@ -144,7 +144,7 @@ export const mdxComponents = {
           {/* Copy button */}
           <button
             aria-label="Copy code"
-            className="flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-2.5 py-1 font-medium text-gray-700 text-xs transition-all hover:border-gray-400 hover:bg-gray-50 active:scale-95 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
+            className="flex items-center gap-1 rounded-md border border-gray-300 bg-white px-2 py-0.5 font-medium text-[10px] text-gray-700 transition-all hover:border-gray-400 hover:bg-gray-50 active:scale-95 md:gap-1.5 md:px-2.5 md:py-1 md:text-xs dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:bg-gray-700"
             onClick={(e) => {
               const container = e.currentTarget.closest(".group\\/pre");
               const codeElement = container?.querySelector("code");
@@ -166,7 +166,7 @@ export const mdxComponents = {
             type="button"
           >
             <svg
-              className="size-3.5"
+              className="size-3 md:size-3.5"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -181,7 +181,7 @@ export const mdxComponents = {
 
         {/* Code block */}
         <pre
-          className="overflow-x-auto rounded-b-xl border border-gray-200 bg-[#0d1117] p-6 dark:border-gray-700"
+          className="w-full overflow-x-auto border border-gray-200 bg-[#0d1117] text-[13px] md:w-full md:max-w-full md:text-sm dark:border-gray-700"
           {...props}
         >
           {props.children}
@@ -196,16 +196,16 @@ export const mdxComponents = {
     height = 600,
     ...props
   }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <figure className="my-10">
+    <figure className="not-prose -mx-4 my-6 w-[calc(100%+2rem)] max-w-[calc(100%+2rem)] md:mx-0 md:my-10 md:w-full md:max-w-full">
       <img
         alt=""
-        className="h-auto max-w-full rounded-xl border border-gray-200 shadow-xl transition-transform hover:scale-[1.02] dark:border-gray-700"
+        className="h-auto w-full rounded-none border border-gray-200 border-x-0 shadow-xl transition-transform hover:scale-[1.02] md:rounded-lg md:border-x dark:border-gray-700"
         height={height}
         width={width}
         {...props}
       />
       {props.alt && (
-        <figcaption className="mt-3 text-center text-gray-600 text-sm italic dark:text-gray-400">
+        <figcaption className="mt-2 px-4 text-center text-gray-600 text-xs italic md:mt-3 md:px-0 md:text-sm dark:text-gray-400">
           {props.alt}
         </figcaption>
       )}
@@ -215,15 +215,15 @@ export const mdxComponents = {
   // Horizontal Rule
   hr: (props: React.HTMLAttributes<HTMLHRElement>) => (
     <hr
-      className="my-16 border-none before:block before:h-px before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:content-[''] dark:before:via-gray-700"
+      className="my-12 border-none before:block before:h-px before:bg-gradient-to-r before:from-transparent before:via-gray-300 before:to-transparent before:content-[''] md:my-16 dark:before:via-gray-700"
       {...props}
     />
   ),
 
   // Tables
   table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
-    <div className="my-10 overflow-hidden rounded-xl border border-gray-200 shadow-lg dark:border-gray-700">
-      <div className="overflow-x-auto">
+    <div className="not-prose -mx-4 my-6 w-[calc(100%+2rem)] max-w-[calc(100%+2rem)] overflow-hidden rounded-none border border-gray-200 border-x-0 shadow-lg md:mx-0 md:my-10 md:w-full md:max-w-full md:rounded-lg md:border-x dark:border-gray-700">
+      <div className="w-full overflow-x-auto">
         <table
           className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
           {...props}
@@ -245,13 +245,13 @@ export const mdxComponents = {
   ),
   th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="px-6 py-4 text-left font-bold text-gray-900 text-xs uppercase tracking-wider dark:text-gray-100"
+      className="px-3 py-3 text-left font-bold text-[10px] text-gray-900 uppercase tracking-wider md:px-6 md:py-4 md:text-xs dark:text-gray-100"
       {...props}
     />
   ),
   td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
     <td
-      className="px-6 py-4 text-gray-700 text-sm leading-relaxed dark:text-gray-300"
+      className="px-3 py-3 text-gray-700 text-xs leading-relaxed md:px-6 md:py-4 md:text-sm dark:text-gray-300"
       {...props}
     />
   ),

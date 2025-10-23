@@ -34,6 +34,7 @@ function OptimizeComponent() {
     setCompressedSvg,
   } = useSvgStore();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobileSettingsOpen, setIsMobileSettingsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("original");
 
   const [_hasAutoSwitchedTab, setHasAutoSwitchedTab] = useAutoTabSwitch(
@@ -98,8 +99,22 @@ function OptimizeComponent() {
     : 0;
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
+    <div className="flex h-[calc(100vh-4rem)] flex-col md:flex-row">
       <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Mobile Settings Toggle Button */}
+        {!originalSvg && (
+          <button
+            className="flex items-center justify-between border-b px-4 py-3 transition-colors hover:bg-accent md:hidden"
+            onClick={() => setIsMobileSettingsOpen(!isMobileSettingsOpen)}
+            type="button"
+          >
+            <span className="font-semibold">Settings</span>
+            <span
+              className={`i-hugeicons-arrow-down-01 size-5 transition-transform ${isMobileSettingsOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+        )}
+
         <OptimizeHeader
           compressedSize={compressedSize}
           compressedSvg={compressedSvg}
@@ -208,11 +223,25 @@ function OptimizeComponent() {
         </div>
       </div>
 
-      <ConfigPanelLazy
-        className={isCollapsed ? "w-12 border-l p-2" : "w-80 border-l p-4"}
-        isCollapsed={isCollapsed}
-        onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
-      />
+      {/* Desktop Settings Panel */}
+      <div className="hidden md:block">
+        <ConfigPanelLazy
+          className={isCollapsed ? "w-12 border-l p-2" : "w-80 border-l p-4"}
+          isCollapsed={isCollapsed}
+          onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
+        />
+      </div>
+
+      {/* Mobile Settings Panel */}
+      {isMobileSettingsOpen && (
+        <div className="border-t md:hidden">
+          <ConfigPanelLazy
+            className="w-full p-4"
+            isCollapsed={false}
+            onToggleCollapse={() => setIsMobileSettingsOpen(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }

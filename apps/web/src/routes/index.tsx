@@ -102,12 +102,12 @@ function HomeComponent() {
   }, [setOriginalSvg, navigate]);
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
-      <section className="mb-16 text-center">
-        <h1 className="mb-4 font-bold text-5xl tracking-tight">
+    <div className="mx-auto w-full max-w-5xl px-4 py-8 md:py-12">
+      <section className="mb-12 text-center md:mb-16">
+        <h1 className="mb-4 font-bold text-3xl tracking-tight md:text-5xl">
           Optimize Your SVG Files
         </h1>
-        <p className="mb-8 text-muted-foreground text-xl">
+        <p className="mb-6 text-base text-muted-foreground md:mb-8 md:text-xl">
           Fast, secure, and client-side SVG compression with real-time preview
         </p>
         <UploadBox
@@ -118,8 +118,10 @@ function HomeComponent() {
       </section>
 
       <section>
-        <h2 className="mb-8 text-center font-bold text-3xl">Features</h2>
-        <div className="grid gap-6 md:grid-cols-3">
+        <h2 className="mb-6 text-center font-bold text-2xl md:mb-8 md:text-3xl">
+          Features
+        </h2>
+        <div className="grid gap-4 md:grid-cols-3 md:gap-6">
           <Card>
             <CardHeader>
               <div className="mb-2 flex justify-center">
@@ -174,14 +176,19 @@ function HomeComponent() {
       </section>
 
       {latestPosts.length > 0 && (
-        <section className="mt-16">
-          <div className="mb-8 flex items-center justify-between">
-            <h2 className="font-bold text-3xl">Latest Blog Posts</h2>
-            <Link className="text-primary hover:underline" to="/blog">
+        <section className="mt-12 md:mt-16">
+          <div className="mb-6 flex items-center justify-between md:mb-8">
+            <h2 className="font-bold text-2xl md:text-3xl">
+              Latest Blog Posts
+            </h2>
+            <Link
+              className="text-primary text-sm hover:underline md:text-base"
+              to="/blog"
+            >
               View all →
             </Link>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 md:gap-6">
             {latestPosts.map((post) => (
               <Card
                 className="overflow-hidden transition-shadow hover:shadow-lg"

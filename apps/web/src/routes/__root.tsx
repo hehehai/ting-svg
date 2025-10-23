@@ -148,9 +148,9 @@ function RootDocument() {
           type="application/ld+json"
         />
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="grid h-svh grid-rows-[auto_1fr]">
+          <div className="grid h-svh grid-rows-[auto_1fr] overflow-x-hidden">
             <Header />
             {isFetching ? <Loader /> : <Outlet />}
           </div>
