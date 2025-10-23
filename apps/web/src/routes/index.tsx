@@ -1,8 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadBox } from "@/components/upload-box";
+import { getLatestBlogPosts } from "@/lib/blog";
 import {
   extractSvgFromBase64,
   isSvgContent,
@@ -10,12 +11,19 @@ import {
 } from "@/lib/file-utils";
 import { useSvgStore } from "@/store/svg-store";
 
+const LATEST_POSTS_COUNT = 4;
+
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const latestPosts = await getLatestBlogPosts(LATEST_POSTS_COUNT);
+    return { latestPosts };
+  },
   component: HomeComponent,
 });
 
 function HomeComponent() {
   const navigate = useNavigate();
+  const { latestPosts } = Route.useLoaderData();
   const { setOriginalSvg } = useSvgStore();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -164,6 +172,57 @@ function HomeComponent() {
           </Card>
         </div>
       </section>
+
+      {latestPosts.length > 0 && (
+        <section className="mt-16">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="font-bold text-3xl">Latest Blog Posts</h2>
+            <Link className="text-primary hover:underline" to="/blog">
+              View all →
+            </Link>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {latestPosts.map((post) => (
+              <Card
+                className="overflow-hidden transition-shadow hover:shadow-lg"
+                key={post.slug}
+              >
+                <Link params={{ slug: post.slug }} to="/blog/$slug">
+                  {post.metadata.cover && (
+                    <img
+                      alt=""
+                      className="h-48 w-full object-cover"
+                      height={192}
+                      src={post.metadata.cover}
+                      width={800}
+                    />
+                  )}
+                  <CardHeader>
+                    <time className="text-muted-foreground text-sm">
+                      {new Date(post.metadata.datetime).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        }
+                      )}
+                    </time>
+                    <CardTitle className="mt-2">
+                      {post.metadata.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm">
+                      {post.metadata.desc}
+                    </p>
+                  </CardContent>
+                </Link>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

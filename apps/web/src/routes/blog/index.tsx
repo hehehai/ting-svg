@@ -1,0 +1,72 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { getBlogPosts } from "../../lib/blog";
+
+export const Route = createFileRoute("/blog/")({
+  loader: async () => {
+    const posts = await getBlogPosts();
+    return { posts };
+  },
+  component: BlogListPage,
+});
+
+function BlogListPage() {
+  const { posts } = Route.useLoaderData();
+
+  return (
+    <div className="container mx-auto max-w-4xl px-4 py-12">
+      <h1 className="mb-8 font-bold text-4xl">Blog</h1>
+
+      {posts.length === 0 ? (
+        <p className="text-gray-600 dark:text-gray-400">No blog posts found.</p>
+      ) : (
+        <div className="space-y-8">
+          {posts.map((post) => (
+            <article
+              className="overflow-hidden rounded-lg border border-gray-200 transition-shadow hover:shadow-lg dark:border-gray-800"
+              key={post.slug}
+            >
+              <Link
+                className="block"
+                params={{
+                  slug: post.slug,
+                }}
+                to="/blog/$slug"
+              >
+                {post.metadata.cover && (
+                  <img
+                    alt=""
+                    className="h-48 w-full object-cover"
+                    height={192}
+                    src={post.metadata.cover}
+                    width={800}
+                  />
+                )}
+                <div className="p-6">
+                  <time className="text-gray-600 text-sm dark:text-gray-400">
+                    {new Date(post.metadata.datetime).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
+                  </time>
+                  <h2 className="mt-2 mb-3 font-bold text-2xl">
+                    {post.metadata.title}
+                  </h2>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    {post.metadata.desc}
+                  </p>
+                  <div className="mt-4 text-blue-600 hover:underline dark:text-blue-400">
+                    Read more →
+                  </div>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

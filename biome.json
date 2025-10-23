@@ -36,7 +36,8 @@
       },
       "performance": {
         "noNamespaceImport": "off",
-        "noBarrelFile": "off"
+        "noBarrelFile": "off",
+        "noImgElement": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
