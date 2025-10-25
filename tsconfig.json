@@ -4,5 +4,8 @@
     {
       "path": "./apps/web"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
 }

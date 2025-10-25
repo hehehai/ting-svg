@@ -2,6 +2,11 @@
   "formatter": "language_server",
   "format_on_save": "on",
   "languages": {
+    "CSS": {
+      "language_servers": [
+        "tailwindcss-language-server"
+      ]
+    },
     "JavaScript": {
       "formatter": {
         "language_server": {
@@ -14,17 +19,6 @@
       }
     },
     "TypeScript": {
-      "formatter": {
-        "language_server": {
-          "name": "biome"
-        }
-      },
-      "code_actions_on_format": {
-        "source.fixAll.biome": true,
-        "source.organizeImports.biome": true
-      }
-    },
-    "JSX": {
       "formatter": {
         "language_server": {
           "name": "biome"
@@ -54,6 +48,20 @@
           "preferences": {
             "includePackageJsonAutoImports": "on"
           }
+        }
+      }
+    },
+    "tailwindcss-language-server": {
+      "settings": {
+        "classFunctions": [
+          "cva",
+          "cx",
+          "cn"
+        ],
+        "experimental": {
+          "classRegex": [
+            "[cls|className]\\s\\:\\=\\s\"([^\"]*)"
+          ]
         }
       }
     }

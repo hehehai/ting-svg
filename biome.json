@@ -23,11 +23,13 @@
       "!**/index.css"
     ]
   },
-  "extends": ["ultracite"],
+  "extends": [
+    "ultracite",
+    "ultracite/core"
+  ],
   "linter": {
     "rules": {
       "nursery": {
-        "useConsistentTypeDefinitions": "off",
         "noReactForwardRef": "off",
         "useMaxParams": "off"
       },
