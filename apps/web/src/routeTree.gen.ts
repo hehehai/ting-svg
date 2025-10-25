@@ -9,156 +9,208 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as OptimizeRouteImport } from './routes/optimize'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as BlogRouteRouteImport } from './routes/blog/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
+import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
+import { Route as Char123LocaleChar125OptimizeRouteImport } from './routes/{-$locale}/optimize'
+import { Route as Char123LocaleChar125AboutRouteImport } from './routes/{-$locale}/about'
+import { Route as Char123LocaleChar125BlogRouteRouteImport } from './routes/{-$locale}/blog/route'
+import { Route as Char123LocaleChar125BlogIndexRouteImport } from './routes/{-$locale}/blog/index'
+import { Route as Char123LocaleChar125BlogSlugRouteImport } from './routes/{-$locale}/blog/$slug'
 
-const OptimizeRoute = OptimizeRouteImport.update({
-  id: '/optimize',
-  path: '/optimize',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRouteRoute = BlogRouteRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BlogRouteRoute,
-} as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRouteRoute,
-} as any)
+const Char123LocaleChar125RouteRoute =
+  Char123LocaleChar125RouteRouteImport.update({
+    id: '/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125IndexRoute =
+  Char123LocaleChar125IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125OptimizeRoute =
+  Char123LocaleChar125OptimizeRouteImport.update({
+    id: '/optimize',
+    path: '/optimize',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125AboutRoute =
+  Char123LocaleChar125AboutRouteImport.update({
+    id: '/about',
+    path: '/about',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125BlogRouteRoute =
+  Char123LocaleChar125BlogRouteRouteImport.update({
+    id: '/blog',
+    path: '/blog',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125BlogIndexRoute =
+  Char123LocaleChar125BlogIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125BlogRouteRoute,
+  } as any)
+const Char123LocaleChar125BlogSlugRoute =
+  Char123LocaleChar125BlogSlugRouteImport.update({
+    id: '/$slug',
+    path: '/$slug',
+    getParentRoute: () => Char123LocaleChar125BlogRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/blog': typeof BlogRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/optimize': typeof OptimizeRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/blog': typeof Char123LocaleChar125BlogRouteRouteWithChildren
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/optimize': typeof Char123LocaleChar125OptimizeRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/blog/$slug': typeof Char123LocaleChar125BlogSlugRoute
+  '/{-$locale}/blog/': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/optimize': typeof OptimizeRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog': typeof BlogIndexRoute
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/optimize': typeof Char123LocaleChar125OptimizeRoute
+  '/{-$locale}': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/blog/$slug': typeof Char123LocaleChar125BlogSlugRoute
+  '/{-$locale}/blog': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/blog': typeof BlogRouteRouteWithChildren
-  '/about': typeof AboutRoute
-  '/optimize': typeof OptimizeRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/blog/': typeof BlogIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/blog': typeof Char123LocaleChar125BlogRouteRouteWithChildren
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/optimize': typeof Char123LocaleChar125OptimizeRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/blog/$slug': typeof Char123LocaleChar125BlogSlugRoute
+  '/{-$locale}/blog/': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blog' | '/about' | '/optimize' | '/blog/$slug' | '/blog/'
+  fullPaths:
+    | '/{-$locale}'
+    | '/{-$locale}/blog'
+    | '/{-$locale}/about'
+    | '/{-$locale}/optimize'
+    | '/{-$locale}/'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/optimize' | '/blog/$slug' | '/blog'
+  to:
+    | '/{-$locale}/about'
+    | '/{-$locale}/optimize'
+    | '/{-$locale}'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/blog'
   id:
     | '__root__'
-    | '/'
-    | '/blog'
-    | '/about'
-    | '/optimize'
-    | '/blog/$slug'
-    | '/blog/'
+    | '/{-$locale}'
+    | '/{-$locale}/blog'
+    | '/{-$locale}/about'
+    | '/{-$locale}/optimize'
+    | '/{-$locale}/'
+    | '/{-$locale}/blog/$slug'
+    | '/{-$locale}/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  BlogRouteRoute: typeof BlogRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
-  OptimizeRoute: typeof OptimizeRoute
+  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/optimize': {
-      id: '/optimize'
+    '/{-$locale}': {
+      id: '/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125RouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/{-$locale}/': {
+      id: '/{-$locale}/'
+      path: '/'
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125IndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
+    }
+    '/{-$locale}/optimize': {
+      id: '/{-$locale}/optimize'
       path: '/optimize'
-      fullPath: '/optimize'
-      preLoaderRoute: typeof OptimizeRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/optimize'
+      preLoaderRoute: typeof Char123LocaleChar125OptimizeRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/about': {
-      id: '/about'
+    '/{-$locale}/about': {
+      id: '/{-$locale}/about'
       path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/about'
+      preLoaderRoute: typeof Char123LocaleChar125AboutRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/blog': {
-      id: '/blog'
+    '/{-$locale}/blog': {
+      id: '/{-$locale}/blog'
       path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/blog'
+      preLoaderRoute: typeof Char123LocaleChar125BlogRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/': {
-      id: '/'
+    '/{-$locale}/blog/': {
+      id: '/{-$locale}/blog/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/blog/'
+      preLoaderRoute: typeof Char123LocaleChar125BlogIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125BlogRouteRoute
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof BlogRouteRoute
-    }
-    '/blog/$slug': {
-      id: '/blog/$slug'
+    '/{-$locale}/blog/$slug': {
+      id: '/{-$locale}/blog/$slug'
       path: '/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRouteRoute
+      fullPath: '/{-$locale}/blog/$slug'
+      preLoaderRoute: typeof Char123LocaleChar125BlogSlugRouteImport
+      parentRoute: typeof Char123LocaleChar125BlogRouteRoute
     }
   }
 }
 
-interface BlogRouteRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
+interface Char123LocaleChar125BlogRouteRouteChildren {
+  Char123LocaleChar125BlogSlugRoute: typeof Char123LocaleChar125BlogSlugRoute
+  Char123LocaleChar125BlogIndexRoute: typeof Char123LocaleChar125BlogIndexRoute
 }
 
-const BlogRouteRouteChildren: BlogRouteRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
+const Char123LocaleChar125BlogRouteRouteChildren: Char123LocaleChar125BlogRouteRouteChildren =
+  {
+    Char123LocaleChar125BlogSlugRoute: Char123LocaleChar125BlogSlugRoute,
+    Char123LocaleChar125BlogIndexRoute: Char123LocaleChar125BlogIndexRoute,
+  }
+
+const Char123LocaleChar125BlogRouteRouteWithChildren =
+  Char123LocaleChar125BlogRouteRoute._addFileChildren(
+    Char123LocaleChar125BlogRouteRouteChildren,
+  )
+
+interface Char123LocaleChar125RouteRouteChildren {
+  Char123LocaleChar125BlogRouteRoute: typeof Char123LocaleChar125BlogRouteRouteWithChildren
+  Char123LocaleChar125AboutRoute: typeof Char123LocaleChar125AboutRoute
+  Char123LocaleChar125OptimizeRoute: typeof Char123LocaleChar125OptimizeRoute
+  Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
 }
 
-const BlogRouteRouteWithChildren = BlogRouteRoute._addFileChildren(
-  BlogRouteRouteChildren,
-)
+const Char123LocaleChar125RouteRouteChildren: Char123LocaleChar125RouteRouteChildren =
+  {
+    Char123LocaleChar125BlogRouteRoute:
+      Char123LocaleChar125BlogRouteRouteWithChildren,
+    Char123LocaleChar125AboutRoute: Char123LocaleChar125AboutRoute,
+    Char123LocaleChar125OptimizeRoute: Char123LocaleChar125OptimizeRoute,
+    Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
+  }
+
+const Char123LocaleChar125RouteRouteWithChildren =
+  Char123LocaleChar125RouteRoute._addFileChildren(
+    Char123LocaleChar125RouteRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  BlogRouteRoute: BlogRouteRouteWithChildren,
-  AboutRoute: AboutRoute,
-  OptimizeRoute: OptimizeRoute,
+  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

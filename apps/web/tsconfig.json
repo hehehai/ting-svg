@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".intlayer/**/*.ts"
+  ],
   "compilerOptions": {
     "composite": true,
     "target": "ES2022",

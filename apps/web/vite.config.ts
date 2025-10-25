@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { intlayer, intlayerMiddleware } from "vite-intlayer";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ mode }) => ({
@@ -12,6 +13,8 @@ export default defineConfig(({ mode }) => ({
         viteEnvironment: { name: "ssr" },
         persistState: true,
       }),
+    intlayer(),
+    intlayerMiddleware(),
     tsconfigPaths(),
     tanstackStart(),
     viteReact(),

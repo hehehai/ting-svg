@@ -1,11 +1,11 @@
 import { Editor } from "@monaco-editor/react";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/file-utils";
 import type { SupportedLanguage } from "@/lib/worker-utils/prettier-worker-client";
 import { prettierWorkerClient } from "@/lib/worker-utils/prettier-worker-client";
+import { useTheme } from "./theme-provider";
 
 type CodeViewerProps = {
   code: string;
@@ -14,9 +14,12 @@ type CodeViewerProps = {
 };
 
 export function CodeViewer({ code, language, fileName }: CodeViewerProps) {
-  const { resolvedTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [displayCode, setDisplayCode] = useState(code);
   const [isPrettified, setIsPrettified] = useState(false);
+
+  // Calculate resolved theme (handle "system" theme)
+  const resolvedTheme = theme === "system" ? systemTheme : theme;
 
   // Update displayCode when code prop changes
   useEffect(() => {

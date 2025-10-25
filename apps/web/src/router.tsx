@@ -7,6 +7,7 @@ export const getRouter = () => {
     routeTree,
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    trailingSlash: "never",
     context: {},
     defaultPendingComponent: () => <Loader />,
     defaultNotFoundComponent: () => <div>Not Found</div>,
@@ -14,9 +15,3 @@ export const getRouter = () => {
   });
   return router;
 };
-
-declare module "@tanstack/react-router" {
-  type Register = {
-    router: ReturnType<typeof getRouter>;
-  };
-}

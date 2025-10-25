@@ -1,7 +1,7 @@
 import { DiffEditor } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "./theme-provider";
 
 type CodeDiffViewerProps = {
   original: string;
@@ -17,13 +17,16 @@ export function CodeDiffViewer({
   modified,
   language = "html",
 }: CodeDiffViewerProps) {
-  const { resolvedTheme } = useTheme();
+  const { theme, systemTheme } = useTheme();
   const [debouncedContent, setDebouncedContent] = useState({
     original,
     modified,
   });
   const updateTimerRef = useRef<NodeJS.Timeout | null>(null);
   const editorRef = useRef<editor.IStandaloneDiffEditor | null>(null);
+
+  // Calculate resolved theme (handle "system" theme)
+  const resolvedTheme = theme === "system" ? systemTheme : theme;
 
   // Debounce content updates
   useEffect(() => {

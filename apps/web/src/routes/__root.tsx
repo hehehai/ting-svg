@@ -6,11 +6,10 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { ThemeProvider } from "next-themes";
 import Loader from "@/components/loader";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "@/styles.css?url";
-import Header from "../components/header";
 
 export type RouterAppContext = Record<string, never>;
 
@@ -150,10 +149,7 @@ function RootDocument() {
       </head>
       <body className="overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="grid h-svh grid-rows-[auto_1fr] overflow-x-hidden">
-            <Header />
-            {isFetching ? <Loader /> : <Outlet />}
-          </div>
+          {isFetching ? <Loader /> : <Outlet />}
           <Toaster richColors />
           <TanStackRouterDevtools position="bottom-left" />
         </ThemeProvider>

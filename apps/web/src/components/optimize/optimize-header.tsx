@@ -29,7 +29,7 @@ export function OptimizeHeader({
     <div className="border-b bg-muted/30 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <h1 className="font-bold text-xl hidden md:block">Optimize SVG</h1>
+          <h1 className="hidden font-bold text-xl md:block">Optimize SVG</h1>
           <p className="text-muted-foreground text-sm">{fileName}</p>
         </div>
         <div className="flex items-center gap-2">

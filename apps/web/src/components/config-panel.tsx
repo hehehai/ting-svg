@@ -1,3 +1,4 @@
+import { useIntlayer } from "react-intlayer";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -28,6 +29,7 @@ export function ConfigPanel({
     compressedSvg,
     fileName,
   } = useSvgStore();
+  const { settings, messages } = useIntlayer("optimize");
 
   if (isCollapsed) {
     return <div className={className} />;
@@ -35,34 +37,34 @@ export function ConfigPanel({
 
   const handleExportPng = async () => {
     if (!compressedSvg) {
-      toast.error("No optimized SVG to export");
+      toast.error(messages.noSvgToExport);
       return;
     }
     try {
       await exportAsPng(compressedSvg, fileName);
-      toast.success("Exported as PNG!");
+      toast.success(messages.exportPngSuccess);
     } catch {
-      toast.error("Failed to export PNG");
+      toast.error(messages.exportError);
     }
   };
 
   const handleExportJpeg = async () => {
     if (!compressedSvg) {
-      toast.error("No optimized SVG to export");
+      toast.error(messages.noSvgToExport);
       return;
     }
     try {
       await exportAsJpeg(compressedSvg, fileName);
-      toast.success("Exported as JPEG!");
+      toast.success(messages.exportJpegSuccess);
     } catch {
-      toast.error("Failed to export JPEG");
+      toast.error(messages.exportError);
     }
   };
 
   return (
     <div className={className}>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-semibold text-lg">Settings</h2>
+        <h2 className="font-semibold text-lg">{settings.title}</h2>
         <Button
           onClick={onToggleCollapse}
           size="sm"
@@ -77,12 +79,12 @@ export function ConfigPanel({
         {/* Global Settings */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Global Settings</CardTitle>
+            <CardTitle className="text-base">{settings.global.title}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="show-original">
-                Show original
+                {settings.global.showOriginal}
               </Label>
               <Switch
                 checked={globalSettings.showOriginal}
@@ -94,7 +96,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="compare-gzipped">
-                Compare gzipped
+                {settings.global.compareGzipped}
               </Label>
               <Switch
                 checked={globalSettings.compareGzipped}
@@ -106,7 +108,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="prettify">
-                Prettify markup
+                {settings.global.prettifyMarkup}
               </Label>
               <Switch
                 checked={globalSettings.prettifyMarkup}
@@ -118,7 +120,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="multipass">
-                Multipass
+                {settings.global.multipass}
               </Label>
               <Switch
                 checked={globalSettings.multipass}
@@ -130,7 +132,7 @@ export function ConfigPanel({
             </div>
             <div className="space-y-2">
               <Label className="text-sm" htmlFor="float-precision">
-                Number precision
+                {settings.global.numberPrecision}
               </Label>
               <Input
                 className="h-8"
@@ -148,7 +150,7 @@ export function ConfigPanel({
             </div>
             <div className="space-y-2">
               <Label className="text-sm" htmlFor="transform-precision">
-                Transform precision
+                {settings.global.transformPrecision}
               </Label>
               <Input
                 className="h-8"
@@ -171,14 +173,16 @@ export function ConfigPanel({
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base">Features</CardTitle>
+              <CardTitle className="text-base">
+                {settings.features.title}
+              </CardTitle>
               <Button
                 onClick={resetPlugins}
                 size="sm"
                 type="button"
                 variant="ghost"
               >
-                Reset all
+                {settings.features.resetAll}
               </Button>
             </div>
           </CardHeader>
@@ -204,7 +208,7 @@ export function ConfigPanel({
         {/* Export Options */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Export</CardTitle>
+            <CardTitle className="text-base">{settings.export.title}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <Button
@@ -215,7 +219,7 @@ export function ConfigPanel({
               variant="outline"
             >
               <span className="i-hugeicons-image-02 mr-2 size-4" />
-              Export as PNG
+              {settings.export.png}
             </Button>
             <Button
               className="w-full"
@@ -225,7 +229,7 @@ export function ConfigPanel({
               variant="outline"
             >
               <span className="i-hugeicons-image-02 mr-2 size-4" />
-              Export as JPEG
+              {settings.export.jpeg}
             </Button>
           </CardContent>
         </Card>

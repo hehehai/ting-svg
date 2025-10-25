@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
+import { useIntlayer } from "react-intlayer";
 import { toast } from "sonner";
 import { CodeDiffViewerLazy } from "@/components/lazy/code-diff-viewer-lazy";
 import { ConfigPanelLazy } from "@/components/lazy/config-panel-lazy";
@@ -19,7 +20,7 @@ import { getComponentName } from "@/lib/svg-to-code";
 import { calculateCompressionRate } from "@/lib/svgo-config";
 import { useSvgStore } from "@/store/svg-store";
 
-export const Route = createFileRoute("/optimize")({
+export const Route = createFileRoute("/{-$locale}/optimize")({
   component: OptimizeComponent,
 });
 
@@ -36,6 +37,7 @@ function OptimizeComponent() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileSettingsOpen, setIsMobileSettingsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("original");
+  const { messages } = useIntlayer("optimize");
 
   const [_hasAutoSwitchedTab, setHasAutoSwitchedTab] = useAutoTabSwitch(
     compressedSvg,
@@ -47,9 +49,9 @@ function OptimizeComponent() {
       const content = await readFileAsText(file);
       setOriginalSvg(content, file.name);
       setHasAutoSwitchedTab(false);
-      toast.success("SVG file uploaded successfully!");
+      toast.success(messages.uploadSuccess);
     },
-    [setOriginalSvg, setHasAutoSwitchedTab]
+    [setOriginalSvg, setHasAutoSwitchedTab, messages.uploadSuccess]
   );
 
   const isDragging = useDragAndDrop();
@@ -76,9 +78,9 @@ function OptimizeComponent() {
   const handleCopy = async () => {
     try {
       await copyToClipboard(compressedSvg);
-      toast.success("Copied to clipboard!");
+      toast.success(messages.copySuccess);
     } catch {
-      toast.error("Failed to copy to clipboard");
+      toast.error(messages.copyError);
     }
   };
 
@@ -86,9 +88,9 @@ function OptimizeComponent() {
     try {
       const newFileName = fileName.replace(".svg", ".optimized.svg");
       downloadSvg(compressedSvg, newFileName);
-      toast.success("Downloaded successfully!");
+      toast.success(messages.downloadSuccess);
     } catch {
-      toast.error("Failed to download file");
+      toast.error(messages.downloadError);
     }
   };
 

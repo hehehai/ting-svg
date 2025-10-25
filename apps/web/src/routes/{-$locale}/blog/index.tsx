@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { getBlogPosts } from "../../lib/blog";
+import { createFileRoute } from "@tanstack/react-router";
+import { LocalizedLink } from "@/components/intlayer/localized-link";
+import { getBlogPosts } from "../../../lib/blog";
 
-export const Route = createFileRoute("/blog/")({
+export const Route = createFileRoute("/{-$locale}/blog/")({
   loader: async () => {
     const posts = await getBlogPosts();
     return { posts };
@@ -70,7 +71,7 @@ function BlogListPage() {
               className="overflow-hidden rounded-lg border border-gray-200 transition-shadow hover:shadow-lg dark:border-gray-800"
               key={post.slug}
             >
-              <Link
+              <LocalizedLink
                 className="block"
                 params={{
                   slug: post.slug,
@@ -107,7 +108,7 @@ function BlogListPage() {
                     Read more →
                   </div>
                 </div>
-              </Link>
+              </LocalizedLink>
             </article>
           ))}
         </div>
