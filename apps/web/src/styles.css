@@ -139,6 +139,7 @@ body {
 .blog-content pre code {
   background: transparent;
   border: none;
+  padding: 1rem;
   border-radius: 0;
   font-size: inherit;
   color: inherit;

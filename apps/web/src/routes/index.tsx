@@ -125,7 +125,7 @@ function HomeComponent() {
           <Card>
             <CardHeader>
               <div className="mb-2 flex justify-center">
-                <div className="rounded-full bg-primary/10 p-3">
+                <div className="rounded-full bg-primary/10 p-3 flex items-center justify-center">
                   <span className="i-hugeicons-flash size-8 text-primary" />
                 </div>
               </div>
@@ -142,7 +142,7 @@ function HomeComponent() {
           <Card>
             <CardHeader>
               <div className="mb-2 flex justify-center">
-                <div className="rounded-full bg-primary/10 p-3">
+                <div className="rounded-full bg-primary/10 p-3 flex items-center justify-center">
                   <span className="i-hugeicons-security-lock size-8 text-primary" />
                 </div>
               </div>
@@ -159,7 +159,7 @@ function HomeComponent() {
           <Card>
             <CardHeader>
               <div className="mb-2 flex justify-center">
-                <div className="rounded-full bg-primary/10 p-3">
+                <div className="rounded-full bg-primary/10 p-3 flex items-center justify-center">
                   <span className="i-hugeicons-view size-8 text-primary" />
                 </div>
               </div>
