@@ -120,8 +120,10 @@ function OptimizeComponent() {
           compressedSvg={compressedSvg}
           compressionRate={compressionRate}
           fileName={fileName}
+          isSettingsCollapsed={isCollapsed}
           onCopy={handleCopy}
           onDownload={handleDownload}
+          onToggleSettings={() => setIsCollapsed(!isCollapsed)}
           originalSize={originalSize}
         />
 
@@ -224,13 +226,15 @@ function OptimizeComponent() {
       </div>
 
       {/* Desktop Settings Panel */}
-      <div className="hidden md:block">
-        <ConfigPanelLazy
-          className={isCollapsed ? "w-12 border-l p-2" : "w-80 border-l p-4"}
-          isCollapsed={isCollapsed}
-          onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
-        />
-      </div>
+      {!isCollapsed && (
+        <div className="hidden md:block">
+          <ConfigPanelLazy
+            className="w-80 border-l p-4"
+            isCollapsed={isCollapsed}
+            onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
+          />
+        </div>
+      )}
 
       {/* Mobile Settings Panel */}
       {isMobileSettingsOpen && (

@@ -191,10 +191,10 @@ function HomeComponent() {
           <div className="grid gap-4 md:grid-cols-2 md:gap-6">
             {latestPosts.map((post) => (
               <Card
-                className="overflow-hidden transition-shadow hover:shadow-lg"
+                className="overflow-hidden p-0 transition-shadow hover:shadow-lg"
                 key={post.slug}
               >
-                <Link params={{ slug: post.slug }} to="/blog/$slug">
+                <Link params={{ slug: post.slug }} to="/blog/$slug" className="block">
                   {post.metadata.cover && (
                     <img
                       alt=""
@@ -204,7 +204,7 @@ function HomeComponent() {
                       width={800}
                     />
                   )}
-                  <CardHeader>
+                  <CardHeader className="pt-2">
                     <time className="text-muted-foreground text-sm">
                       {new Date(post.metadata.datetime).toLocaleDateString(
                         "en-US",
@@ -219,7 +219,7 @@ function HomeComponent() {
                       {post.metadata.title}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-4 py-3">
                     <p className="text-muted-foreground text-sm">
                       {post.metadata.desc}
                     </p>

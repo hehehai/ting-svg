@@ -48,7 +48,7 @@ export function UploadBox({
       <div className="flex flex-col items-center gap-4">
         <div
           className={cn(
-            "rounded-full p-4 transition-colors",
+            "flex items-center justify-center rounded-full p-4 transition-colors",
             isDragActive || isHighlighted ? "bg-primary/10" : "bg-accent"
           )}
         >

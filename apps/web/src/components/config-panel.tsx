@@ -30,19 +30,7 @@ export function ConfigPanel({
   } = useSvgStore();
 
   if (isCollapsed) {
-    return (
-      <div className={className}>
-        <Button
-          className="h-full"
-          onClick={onToggleCollapse}
-          size="sm"
-          type="button"
-          variant="outline"
-        >
-          <span className="i-hugeicons-arrow-left-02 size-4" />
-        </Button>
-      </div>
-    );
+    return <div className={className} />;
   }
 
   const handleExportPng = async () => {
