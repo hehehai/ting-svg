@@ -12,20 +12,20 @@ import * as prettier from "prettier/standalone";
 
 type SupportedLanguage = "javascript" | "typescript" | "html" | "dart" | "svg";
 
-interface WorkerMessage {
+type WorkerMessage = {
   id: string;
   data: {
     content: string;
     language: SupportedLanguage;
   };
-}
+};
 
-interface WorkerResponse {
+type WorkerResponse = {
   id: string;
   success: boolean;
   data?: string;
   error?: string;
-}
+};
 
 async function prettifyContent(
   content: string,

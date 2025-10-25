@@ -3,10 +3,10 @@
  * Caches worker computation results to avoid redundant processing
  */
 
-interface CacheEntry<T> {
+type CacheEntry<T> = {
   result: T;
   timestamp: number;
-}
+};
 
 const SECONDS_PER_MINUTE = 60;
 const MS_PER_SECOND = 1000;

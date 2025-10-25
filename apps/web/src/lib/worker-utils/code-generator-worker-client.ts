@@ -15,23 +15,23 @@ export type GeneratorType =
   | "react-native"
   | "flutter";
 
-export interface SvgData {
+export type SvgData = {
   innerContent: string;
   viewBox: string;
   componentName: string;
   processedContent: string;
-}
+};
 
-interface CodeGeneratorRequest {
+type CodeGeneratorRequest = {
   type: GeneratorType;
   svgData: SvgData;
   svgString: string;
-}
+};
 
-interface CodeGeneratorResponse {
+type CodeGeneratorResponse = {
   type: GeneratorType;
   code: string;
-}
+};
 
 class CodeGeneratorWorkerClient {
   private worker: WorkerManager<

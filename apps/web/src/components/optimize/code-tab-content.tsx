@@ -2,11 +2,11 @@ import { CodeViewerLazy } from "@/components/lazy/code-viewer-lazy";
 
 type SupportedLanguage = "javascript" | "typescript" | "html" | "dart";
 
-interface CodeTabContentProps {
+type CodeTabContentProps = {
   activeTab: string;
   generatedCodes: Map<string, string>;
   componentName: string;
-}
+};
 
 const codeTabConfig: Record<
   string,

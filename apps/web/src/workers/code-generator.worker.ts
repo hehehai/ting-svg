@@ -6,12 +6,12 @@
  * pre-processes the SVG and sends parsed data to the worker
  */
 
-interface SvgData {
+type SvgData = {
   innerContent: string;
   viewBox: string;
   componentName: string;
   processedContent: string; // Already processed with currentColor if needed
-}
+};
 
 type GeneratorType =
   | "react-jsx"
@@ -21,16 +21,16 @@ type GeneratorType =
   | "react-native"
   | "flutter";
 
-interface WorkerMessage {
+type WorkerMessage = {
   id: string;
   data: {
     type: GeneratorType;
     svgData: SvgData;
     svgString: string; // Original for Flutter
   };
-}
+};
 
-interface WorkerResponse {
+type WorkerResponse = {
   id: string;
   success: boolean;
   data?: {
@@ -38,7 +38,7 @@ interface WorkerResponse {
     code: string;
   };
   error?: string;
-}
+};
 
 // Convert hyphenated attribute names to camelCase for React
 function _toCamelCase(str: string): string {

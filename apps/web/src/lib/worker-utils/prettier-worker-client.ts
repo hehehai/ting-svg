@@ -14,10 +14,10 @@ export type SupportedLanguage =
   | "dart"
   | "svg";
 
-interface PrettierRequest {
+type PrettierRequest = {
   content: string;
   language: SupportedLanguage;
-}
+};
 
 type PrettierResponse = string;
 

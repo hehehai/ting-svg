@@ -3,17 +3,17 @@
  * Handles worker lifecycle and message passing with Promise-based API
  */
 
-interface WorkerMessage<T = unknown> {
+type WorkerMessage<T = unknown> = {
   id: string;
   data: T;
-}
+};
 
-interface WorkerResponse<T = unknown> {
+type WorkerResponse<T = unknown> = {
   id: string;
   success: boolean;
   data?: T;
   error?: string;
-}
+};
 
 type ResolveReject<T> = {
   resolve: (value: T) => void;

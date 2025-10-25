@@ -8,10 +8,10 @@ import SvgoWorker from "@/workers/svgo.worker?worker&url";
 import { WorkerCache } from "./cache";
 import { WorkerManager } from "./worker-manager";
 
-interface SvgoRequest {
+type SvgoRequest = {
   svg: string;
   config: SvgoConfig;
-}
+};
 
 type SvgoResponse = string;
 

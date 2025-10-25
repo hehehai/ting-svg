@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/svgo-config";
 
-interface OptimizeHeaderProps {
+type OptimizeHeaderProps = {
   fileName: string;
   originalSize: number;
   compressedSize: number;
@@ -9,7 +9,7 @@ interface OptimizeHeaderProps {
   compressedSvg: string;
   onCopy: () => void;
   onDownload: () => void;
-}
+};
 
 export function OptimizeHeader({
   fileName,

@@ -5,20 +5,20 @@
 
 import { type Config, optimize } from "svgo";
 
-interface WorkerMessage {
+type WorkerMessage = {
   id: string;
   data: {
     svg: string;
     config: Config;
   };
-}
+};
 
-interface WorkerResponse {
+type WorkerResponse = {
   id: string;
   success: boolean;
   data?: string;
   error?: string;
-}
+};
 
 self.onmessage = (e: MessageEvent<WorkerMessage>) => {
   const { id, data } = e.data;
