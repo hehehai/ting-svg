@@ -149,7 +149,9 @@ function RootDocument() {
       </head>
       <body className="overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {isFetching ? <Loader /> : <Outlet />}
+          <div className="grid h-svh grid-rows-[1fr]">
+            {isFetching ? <Loader /> : <Outlet />}
+          </div>
           <Toaster richColors />
           <TanStackRouterDevtools position="bottom-left" />
         </ThemeProvider>

@@ -57,6 +57,7 @@ export default function Header() {
           <nav className="hidden gap-6 md:flex">
             {links.map(({ to, label }) => (
               <LocalizedLink
+                activeOptions={{ exact: to === "/" }}
                 activeProps={{ className: "active" }}
                 className="text-muted-foreground transition-colors hover:text-foreground [&.active]:font-medium [&.active]:text-foreground"
                 key={to}
@@ -112,6 +113,7 @@ export default function Header() {
           <nav className="flex flex-col px-4 py-2">
             {links.map(({ to, label }) => (
               <LocalizedLink
+                activeOptions={{ exact: to === "/" }}
                 activeProps={{ className: "active" }}
                 className="rounded-md px-3 py-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground [&.active]:bg-accent/50 [&.active]:font-medium [&.active]:text-foreground"
                 key={to}
