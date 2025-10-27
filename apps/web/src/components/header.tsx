@@ -43,7 +43,7 @@ export default function Header() {
   };
 
   return (
-    <div>
+    <header>
       <div className="flex flex-row items-center justify-between border-b px-4 py-3">
         <div className="flex items-center gap-4 md:gap-8">
           <LocalizedLink
@@ -136,6 +136,6 @@ export default function Header() {
           </nav>
         </div>
       )}
-    </div>
+    </header>
   );
 }

@@ -75,7 +75,7 @@ function OptimizeLayout({
   onTabChange,
 }: OptimizeLayoutProps) {
   return (
-    <div className="flex h-[calc(100vh-4rem)] flex-col md:flex-row">
+    <div className="flex h-[calc(100vh-4rem)] w-screen flex-col md:flex-row">
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Mobile Settings Toggle Button */}
         {!originalSvg && (
@@ -133,9 +133,9 @@ function OptimizeLayout({
 
       {/* Desktop Settings Panel */}
       {!isCollapsed && (
-        <div className="hidden md:block">
+        <div className="hidden w-80 border-l md:block">
           <ConfigPanelLazy
-            className="w-80 border-l p-4"
+            className="h-full p-4"
             isCollapsed={isCollapsed}
             onToggleCollapse={onToggleSettings}
           />
