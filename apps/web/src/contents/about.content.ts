@@ -121,6 +121,12 @@ const aboutContent = {
           ko: "React - UI 라이브러리",
           de: "React - UI-Bibliothek",
         }),
+        intlayer: t({
+          en: "Intlayer - Type-safe i18n library",
+          zh: "Intlayer - 类型安全的国际化库",
+          ko: "Intlayer - 타입 안전 국제화 라이브러리",
+          de: "Intlayer - Typsichere i18n-Bibliothek",
+        }),
         radix: t({
           en: "Radix UI - Accessible component primitives",
           zh: "Radix UI - 无障碍组件基础库",

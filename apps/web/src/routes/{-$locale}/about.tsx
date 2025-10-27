@@ -90,6 +90,14 @@ function AboutComponent() {
           </a>
           <a
             className="text-primary hover:underline"
+            href="https://intlayer.org"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {dependenciesSection.libraries.intlayer}
+          </a>
+          <a
+            className="text-primary hover:underline"
             href="https://www.radix-ui.com"
             rel="noopener noreferrer"
             target="_blank"

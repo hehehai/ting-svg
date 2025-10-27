@@ -30,6 +30,7 @@
 - **💾 Persistent Settings**: Your preferences saved across sessions
 - **📱 Responsive Design**: Works seamlessly on desktop and mobile
 - **🌓 Dark Mode**: Full dark mode support
+- **🌍 Internationalization**: Multi-language support (EN, ZH, KO, DE)
 - **⚡ Lightning Fast**: Optimized bundle with lazy loading and code splitting
 
 ---
@@ -126,6 +127,10 @@ pnpm check-types
 - **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component collection
 - **[Iconify](https://iconify.design/)** - Unified icon framework
 
+### Internationalization
+- **[Intlayer](https://intlayer.org/)** - Type-safe i18n library for React
+- **Languages Supported**: English, Chinese (简体中文), Korean (한국어), German (Deutsch)
+
 ### State Management & Data
 - **[Zustand](https://zustand-demo.pmnd.rs/)** - Lightweight state management
 - **[Zod](https://zod.dev/)** - TypeScript-first schema validation
@@ -199,6 +204,10 @@ tiny-svg/
 │       │   │   ├── lazy/        # Lazy-loaded wrappers
 │       │   │   ├── optimize/    # Optimize page components
 │       │   │   └── ui/          # Reusable UI components
+│       │   ├── contents/        # i18n content definitions
+│       │   │   ├── home.content.ts
+│       │   │   ├── about.content.ts
+│       │   │   └── optimize.content.ts
 │       │   ├── hooks/           # Custom React hooks
 │       │   │   ├── use-auto-compress.ts
 │       │   │   ├── use-code-generation.ts
@@ -209,14 +218,17 @@ tiny-svg/
 │       │   │   ├── svg-to-code.ts      # Code generators
 │       │   │   └── worker-utils/       # Worker utilities
 │       │   ├── routes/          # File-based routing
-│       │   │   ├── index.tsx    # Home page
-│       │   │   └── optimize.tsx # Optimize page
+│       │   │   └── {-$locale}/  # Locale-based routing
+│       │   │       ├── index.tsx    # Home page
+│       │   │       ├── about.tsx    # About page
+│       │   │       └── optimize.tsx # Optimize page
 │       │   ├── store/           # Global state (Zustand)
 │       │   └── workers/         # Web Workers
 │       │       ├── svgo.worker.ts
 │       │       ├── code-generator.worker.ts
 │       │       └── prettier.worker.ts
 │       ├── public/              # Static assets
+│       ├── intlayer.config.ts   # i18n configuration
 │       └── vite.config.ts       # Vite configuration
 ├── docs/
 │   └── images/                  # Documentation images

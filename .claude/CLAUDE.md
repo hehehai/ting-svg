@@ -1,11 +1,27 @@
 # Project Context
-Ultracite enforces strict type safety, accessibility standards, and consistent code quality for JavaScript/TypeScript projects using Biome's lightning-fast formatter and linter.
+
+Tiny SVG is a modern, lightning-fast SVG optimizer and code generator built with TanStack Start, React 19, and TypeScript. The project uses Ultracite to enforce strict type safety, accessibility standards, and consistent code quality using Biome's lightning-fast formatter and linter.
+
+## Project Overview
+
+- **Name**: Tiny SVG
+- **Description**: Web-based SVG optimization tool with real-time preview and code generation
+- **Framework**: TanStack Start (SSR with file-based routing)
+- **UI Library**: React 19
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4, Radix UI, shadcn/ui
+- **Internationalization**: Intlayer (EN, ZH, KO, DE)
+- **State Management**: Zustand
+- **Build Tool**: Vite 7
+- **Deployment**: Cloudflare Workers
 
 ## Key Principles
 - Zero configuration required
 - Subsecond performance
 - Maximum type safety
 - AI-friendly code generation
+- Type-safe internationalization
+- Accessibility-first design
 
 ## Before Writing Code
 1. Analyze existing patterns in the codebase
@@ -302,10 +318,39 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Make sure the assertion function, like expect, is placed inside an it() function call.
 - Don't use disabled tests.
 
+## Project Structure
+
+### Key Directories
+- `apps/web/src/components/` - React components (lazy-loaded, optimize, UI)
+- `apps/web/src/contents/` - i18n content definitions (*.content.ts files)
+- `apps/web/src/routes/{-$locale}/` - Locale-based file routing
+- `apps/web/src/hooks/` - Custom React hooks
+- `apps/web/src/lib/` - Utility functions (SVGO config, code generators, worker utils)
+- `apps/web/src/workers/` - Web Workers (svgo, prettier, code-generator)
+- `apps/web/intlayer.config.ts` - i18n configuration
+
+### Internationalization
+- Use Intlayer for type-safe translations
+- Define content in `*.content.ts` files using `t()` function
+- Access translations with `useIntlayer()` hook
+- Supported locales: English, Chinese, Korean, German
+
+### Route Structure
+- Routes are under `{-$locale}/` for locale-based routing
+- Main pages: index (home), about, optimize
+
 ## Common Tasks
+- `pnpm dev` - Start all workspace apps in development mode
+- `pnpm dev:web` - Start only the web app
+- `pnpm build` - Build all workspace packages
+- `pnpm --filter web build` - Build only the web app
+- `pnpm --filter web deploy` - Build and deploy to Cloudflare Workers
+- `pnpm check` - Run Biome linter and formatter
+- `pnpm check-types` - Run TypeScript type checking
 - `npx ultracite init` - Initialize Ultracite in your project
 - `npx ultracite fix` - Format and fix code automatically
 - `npx ultracite check` - Check for issues without fixing
+- `pnpm intlayer build` - Build internationalization dictionaries
 
 ## Example: Error Handling
 ```typescript
