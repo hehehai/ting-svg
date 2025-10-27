@@ -100,6 +100,12 @@ const homeContent = {
         ko: "또는 클릭하여 파일 찾기",
         de: "oder klicken Sie, um Dateien zu durchsuchen",
       }),
+      pasteHint: t({
+        en: "You can also paste SVG code or base64 directly (Ctrl+V / Cmd+V)",
+        zh: "您也可以直接粘贴 SVG 代码或 base64 (Ctrl+V / Cmd+V)",
+        ko: "SVG 코드 또는 base64를 직접 붙여넣을 수도 있습니다 (Ctrl+V / Cmd+V)",
+        de: "Sie können auch SVG-Code oder base64 direkt einfügen (Strg+V / Cmd+V)",
+      }),
       acceptsOnly: t({
         en: "Accepts .svg files only",
         zh: "仅接受 .svg 文件",

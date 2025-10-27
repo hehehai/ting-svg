@@ -22,6 +22,8 @@ export function UploadBox({
     dragActive: "Drop your SVG file here",
     dragInactive: "Drag & drop your SVG file here",
     clickToBrowse: "or click to browse files",
+    pasteHint:
+      "You can also paste SVG code or base64 directly (Ctrl+V / Cmd+V)",
     acceptsOnly: "Accepts .svg files only",
   };
 
@@ -73,9 +75,15 @@ export function UploadBox({
             {safeUpload.clickToBrowse}
           </p>
         </div>
-        <div className="flex items-center gap-2 text-muted-foreground text-xs">
-          <span className="i-hugeicons-file-02 size-4" />
-          <span>{safeUpload.acceptsOnly}</span>
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center justify-center gap-2 text-muted-foreground text-xs">
+            <span className="i-hugeicons-file-02 size-4" />
+            <span>{safeUpload.acceptsOnly}</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-muted-foreground text-xs">
+            <span className="i-hugeicons-paste size-4" />
+            <span>{safeUpload.pasteHint}</span>
+          </div>
         </div>
       </div>
     </div>
