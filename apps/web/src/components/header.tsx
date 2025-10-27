@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useIntlayer } from "react-intlayer";
-import { LocaleSwitcher } from "./intlayer/locale-swithcer";
-import { LocalizedLink } from "./intlayer/localized-link";
-import { useTheme } from "./theme-provider";
+import { LocaleSwitcher } from "@/components/intlayer/locale-swithcer";
+import { LocalizedLink } from "@/components/intlayer/localized-link";
+import { useTheme } from "@/components/theme-provider";
 
 export default function Header() {
   const { nav } = useIntlayer("header");

@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { useIntlayer } from "react-intlayer";
 import { isSvgFile } from "@/lib/file-utils";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,16 @@ export function UploadBox({
   isHighlighted = false,
   className,
 }: UploadBoxProps) {
+  const { upload } = useIntlayer("home");
+
+  // 提供默认值，防止服务器端渲染错误
+  const safeUpload = upload || {
+    dragActive: "Drop your SVG file here",
+    dragInactive: "Drag & drop your SVG file here",
+    clickToBrowse: "or click to browse files",
+    acceptsOnly: "Accepts .svg files only",
+  };
+
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -56,17 +67,15 @@ export function UploadBox({
         </div>
         <div className="space-y-2">
           <p className="font-medium text-lg">
-            {isDragActive
-              ? "Drop your SVG file here"
-              : "Drag & drop your SVG file here"}
+            {isDragActive ? safeUpload.dragActive : safeUpload.dragInactive}
           </p>
           <p className="text-muted-foreground text-sm">
-            or click to browse files
+            {safeUpload.clickToBrowse}
           </p>
         </div>
         <div className="flex items-center gap-2 text-muted-foreground text-xs">
           <span className="i-hugeicons-file-02 size-4" />
-          <span>Accepts .svg files only</span>
+          <span>{safeUpload.acceptsOnly}</span>
         </div>
       </div>
     </div>

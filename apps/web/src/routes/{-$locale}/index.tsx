@@ -28,7 +28,7 @@ function HomeComponent() {
   const { latestPosts } = Route.useLoaderData();
   const { setOriginalSvg } = useSvgStore();
   const [isDragging, setIsDragging] = useState(false);
-  const { hero, features, blog } = useIntlayer("home");
+  const { hero, features, blog, messages } = useIntlayer("home");
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -79,9 +79,7 @@ function HomeComponent() {
                 setOriginalSvg(extracted, "pasted.svg");
                 navigate({ to: "/{-$locale}/optimize" });
               } else {
-                toast.error(
-                  "Invalid SVG content. Please paste valid SVG code."
-                );
+                toast.error(messages.invalidSvgContent);
               }
             }
           });
@@ -102,7 +100,7 @@ function HomeComponent() {
       document.removeEventListener("drop", handleDrop);
       document.removeEventListener("paste", handlePaste);
     };
-  }, [setOriginalSvg, navigate]);
+  }, [setOriginalSvg, navigate, messages.invalidSvgContent]);
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-8 md:py-12">

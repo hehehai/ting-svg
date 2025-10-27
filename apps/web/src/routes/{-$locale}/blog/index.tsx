@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LocalizedLink } from "@/components/intlayer/localized-link";
-import { getBlogPosts } from "../../../lib/blog";
+import { getBlogPosts } from "@/lib/blog";
 
 export const Route = createFileRoute("/{-$locale}/blog/")({
   loader: async () => {

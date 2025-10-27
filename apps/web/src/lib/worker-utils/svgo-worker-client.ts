@@ -4,9 +4,9 @@
  */
 
 import type { SvgoConfig } from "@/lib/svgo";
+import { WorkerCache } from "@/lib/worker-utils/cache";
+import { WorkerManager } from "@/lib/worker-utils/worker-manager";
 import SvgoWorker from "@/workers/svgo.worker?worker&url";
-import { WorkerCache } from "./cache";
-import { WorkerManager } from "./worker-manager";
 
 type SvgoRequest = {
   svg: string;

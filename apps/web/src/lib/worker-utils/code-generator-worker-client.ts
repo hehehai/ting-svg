@@ -3,9 +3,9 @@
  * Provides a Promise-based API for code generation using Web Workers
  */
 
+import { WorkerCache } from "@/lib/worker-utils/cache";
+import { WorkerManager } from "@/lib/worker-utils/worker-manager";
 import CodeGeneratorWorker from "@/workers/code-generator.worker?worker&url";
-import { WorkerCache } from "./cache";
-import { WorkerManager } from "./worker-manager";
 
 export type GeneratorType =
   | "react-jsx"

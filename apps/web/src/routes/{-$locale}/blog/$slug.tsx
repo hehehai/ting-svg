@@ -4,8 +4,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import * as runtime from "react/jsx-runtime";
 import rehypePrettyCode from "rehype-pretty-code";
-import { mdxComponents } from "../../../components/mdx-content";
-import { getBlogPost } from "../../../lib/blog";
+import { mdxComponents } from "@/components/mdx-content";
+import { getBlogPost } from "@/lib/blog";
 
 export const Route = createFileRoute("/{-$locale}/blog/$slug")({
   loader: async ({ params }) => {

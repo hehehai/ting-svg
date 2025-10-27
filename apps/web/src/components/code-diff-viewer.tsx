@@ -1,7 +1,7 @@
 import { DiffEditor } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "@/components/theme-provider";
 
 type CodeDiffViewerProps = {
   original: string;

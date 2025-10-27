@@ -81,6 +81,40 @@ const homeContent = {
         de: "Alle anzeigen",
       }),
     },
+    upload: {
+      dragActive: t({
+        en: "Drop your SVG file here",
+        zh: "将您的 SVG 文件拖放到这里",
+        ko: "SVG 파일을 여기에 놓으세요",
+        de: "Lassen Sie Ihre SVG-Datei hier fallen",
+      }),
+      dragInactive: t({
+        en: "Drag & drop your SVG file here",
+        zh: "将您的 SVG 文件拖放到这里",
+        ko: "SVG 파일을 여기에 끌어다 놓으세요",
+        de: "Ziehen Sie Ihre SVG-Datei hierher",
+      }),
+      clickToBrowse: t({
+        en: "or click to browse files",
+        zh: "或点击浏览文件",
+        ko: "또는 클릭하여 파일 찾기",
+        de: "oder klicken Sie, um Dateien zu durchsuchen",
+      }),
+      acceptsOnly: t({
+        en: "Accepts .svg files only",
+        zh: "仅接受 .svg 文件",
+        ko: ".svg 파일만 허용됩니다",
+        de: "Akzeptiert nur .svg-Dateien",
+      }),
+    },
+    messages: {
+      invalidSvgContent: t({
+        en: "Invalid SVG content. Please paste valid SVG code.",
+        zh: "无效的 SVG 内容。请粘贴有效的 SVG 代码。",
+        ko: "유효하지 않은 SVG 내용입니다. 유효한 SVG 코드를 붙여넣어주세요.",
+        de: "Ungültiger SVG-Inhalt. Bitte fügen Sie gültigen SVG-Code ein.",
+      }),
+    },
   },
 } satisfies Dictionary;
 

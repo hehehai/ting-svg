@@ -1,4 +1,4 @@
-import { useIntlayer } from "react-intlayer";
+import { useIntlayer, useLocale } from "react-intlayer";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +30,37 @@ export function ConfigPanel({
     fileName,
   } = useSvgStore();
   const { settings, messages } = useIntlayer("optimize");
+  const { locale } = useLocale();
+
+  // 提供默认值，防止服务器端渲染错误
+  const safeSettings = settings || {
+    title: "Settings",
+    global: {
+      title: "Global Settings",
+      showOriginal: "Show original",
+      compareGzipped: "Compare gzipped",
+      prettifyMarkup: "Prettify markup",
+      multipass: "Multipass",
+      numberPrecision: "Number precision",
+      transformPrecision: "Transform precision",
+    },
+    features: {
+      title: "Features",
+      resetAll: "Reset all",
+    },
+    export: {
+      title: "Export",
+      png: "Export as PNG",
+      jpeg: "Export as JPEG",
+    },
+  };
+
+  const safeMessages = messages || {
+    noSvgToExport: "No optimized SVG to export",
+    exportPngSuccess: "Exported as PNG!",
+    exportJpegSuccess: "Exported as JPEG!",
+    exportError: "Failed to export",
+  };
 
   if (isCollapsed) {
     return <div className={className} />;
@@ -37,34 +68,34 @@ export function ConfigPanel({
 
   const handleExportPng = async () => {
     if (!compressedSvg) {
-      toast.error(messages.noSvgToExport);
+      toast.error(safeMessages.noSvgToExport);
       return;
     }
     try {
       await exportAsPng(compressedSvg, fileName);
-      toast.success(messages.exportPngSuccess);
+      toast.success(safeMessages.exportPngSuccess);
     } catch {
-      toast.error(messages.exportError);
+      toast.error(safeMessages.exportError);
     }
   };
 
   const handleExportJpeg = async () => {
     if (!compressedSvg) {
-      toast.error(messages.noSvgToExport);
+      toast.error(safeMessages.noSvgToExport);
       return;
     }
     try {
       await exportAsJpeg(compressedSvg, fileName);
-      toast.success(messages.exportJpegSuccess);
+      toast.success(safeMessages.exportJpegSuccess);
     } catch {
-      toast.error(messages.exportError);
+      toast.error(safeMessages.exportError);
     }
   };
 
   return (
     <div className={className}>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-semibold text-lg">{settings.title}</h2>
+        <h2 className="font-semibold text-lg">{safeSettings.title}</h2>
         <Button
           onClick={onToggleCollapse}
           size="sm"
@@ -79,12 +110,14 @@ export function ConfigPanel({
         {/* Global Settings */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{settings.global.title}</CardTitle>
+            <CardTitle className="text-base">
+              {safeSettings.global.title}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="show-original">
-                {settings.global.showOriginal}
+                {safeSettings.global.showOriginal}
               </Label>
               <Switch
                 checked={globalSettings.showOriginal}
@@ -96,7 +129,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="compare-gzipped">
-                {settings.global.compareGzipped}
+                {safeSettings.global.compareGzipped}
               </Label>
               <Switch
                 checked={globalSettings.compareGzipped}
@@ -108,7 +141,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="prettify">
-                {settings.global.prettifyMarkup}
+                {safeSettings.global.prettifyMarkup}
               </Label>
               <Switch
                 checked={globalSettings.prettifyMarkup}
@@ -120,7 +153,7 @@ export function ConfigPanel({
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-sm" htmlFor="multipass">
-                {settings.global.multipass}
+                {safeSettings.global.multipass}
               </Label>
               <Switch
                 checked={globalSettings.multipass}
@@ -132,7 +165,7 @@ export function ConfigPanel({
             </div>
             <div className="space-y-2">
               <Label className="text-sm" htmlFor="float-precision">
-                {settings.global.numberPrecision}
+                {safeSettings.global.numberPrecision}
               </Label>
               <Input
                 className="h-8"
@@ -150,7 +183,7 @@ export function ConfigPanel({
             </div>
             <div className="space-y-2">
               <Label className="text-sm" htmlFor="transform-precision">
-                {settings.global.transformPrecision}
+                {safeSettings.global.transformPrecision}
               </Label>
               <Input
                 className="h-8"
@@ -174,7 +207,7 @@ export function ConfigPanel({
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-base">
-                {settings.features.title}
+                {safeSettings.features.title}
               </CardTitle>
               <Button
                 onClick={resetPlugins}
@@ -182,7 +215,7 @@ export function ConfigPanel({
                 type="button"
                 variant="ghost"
               >
-                {settings.features.resetAll}
+                {safeSettings.features.resetAll}
               </Button>
             </div>
           </CardHeader>
@@ -193,7 +226,7 @@ export function ConfigPanel({
                 key={plugin.name}
               >
                 <Label className="cursor-pointer text-sm" htmlFor={plugin.name}>
-                  {getPluginLabel(plugin.name)}
+                  {getPluginLabel(plugin.name, locale)}
                 </Label>
                 <Switch
                   checked={plugin.enabled}
@@ -208,7 +241,9 @@ export function ConfigPanel({
         {/* Export Options */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{settings.export.title}</CardTitle>
+            <CardTitle className="text-base">
+              {safeSettings.export.title}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <Button
@@ -219,7 +254,7 @@ export function ConfigPanel({
               variant="outline"
             >
               <span className="i-hugeicons-image-02 mr-2 size-4" />
-              {settings.export.png}
+              {safeSettings.export.png}
             </Button>
             <Button
               className="w-full"
@@ -229,7 +264,7 @@ export function ConfigPanel({
               variant="outline"
             >
               <span className="i-hugeicons-image-02 mr-2 size-4" />
-              {settings.export.jpeg}
+              {safeSettings.export.jpeg}
             </Button>
           </CardContent>
         </Card>

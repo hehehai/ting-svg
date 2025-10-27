@@ -1,11 +1,11 @@
 import { Editor } from "@monaco-editor/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { copyToClipboard } from "@/lib/file-utils";
 import type { SupportedLanguage } from "@/lib/worker-utils/prettier-worker-client";
 import { prettierWorkerClient } from "@/lib/worker-utils/prettier-worker-client";
-import { useTheme } from "./theme-provider";
 
 type CodeViewerProps = {
   code: string;

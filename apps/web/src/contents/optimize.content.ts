@@ -9,6 +9,26 @@ const optimizeContent = {
       ko: "SVG 최적화",
       de: "SVG optimieren",
     }),
+    header: {
+      title: t({
+        en: "Optimize SVG",
+        zh: "优化 SVG",
+        ko: "SVG 최적화",
+        de: "SVG optimieren",
+      }),
+      copy: t({
+        en: "Copy",
+        zh: "复制",
+        ko: "복사",
+        de: "Kopieren",
+      }),
+      download: t({
+        en: "Download",
+        zh: "下载",
+        ko: "다운로드",
+        de: "Herunterladen",
+      }),
+    },
     buttons: {
       copy: t({
         en: "Copy",
@@ -183,6 +203,44 @@ const optimizeContent = {
         zh: "没有优化的 SVG 可导出",
         ko: "내보내기する最適化されたSVGがありません",
         de: "Keine optimierte SVG zum Exportieren",
+      }),
+    },
+    ui: {
+      settings: t({
+        en: "Settings",
+        zh: "设置",
+        ko: "설정",
+        de: "Einstellungen",
+      }),
+      originalTab: t({
+        en: "Original",
+        zh: "原始",
+        ko: "원본",
+        de: "Original",
+      }),
+      optimizedTab: t({
+        en: "Optimized",
+        zh: "已优化",
+        ko: "최적화됨",
+        de: "Optimiert",
+      }),
+      codeTab: t({
+        en: "Code",
+        zh: "代码",
+        ko: "코드",
+        de: "Code",
+      }),
+      clickToCompress: t({
+        en: 'Click "Compress SVG" to optimize',
+        zh: '点击"压缩 SVG"进行优化',
+        ko: '"SVG 압축"을 클릭하여 최적화하세요',
+        de: 'Klicken Sie auf "SVG komprimieren" zum Optimieren',
+      }),
+      noOptimizedCode: t({
+        en: "No optimized code yet",
+        zh: "暂无优化代码",
+        ko: "아직 최적화된 코드가 없습니다",
+        de: "Noch kein optimierter Code",
       }),
     },
   },

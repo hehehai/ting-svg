@@ -13,8 +13,11 @@ function LayoutComponent() {
   const { defaultLocale } = useLocale();
   const { locale } = Route.useParams();
 
+  // 强制使用英语作为默认语言，防止服务器端渲染错误
+  const safeLocale = locale ?? defaultLocale ?? "en";
+
   return (
-    <IntlayerProvider locale={locale ?? defaultLocale}>
+    <IntlayerProvider locale={safeLocale}>
       <div className="grid h-svh grid-rows-[auto_1fr] overflow-x-hidden">
         <Header />
         <Outlet />

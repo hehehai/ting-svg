@@ -6,6 +6,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { ErrorBoundary } from "@/components/error-boundary";
 import Loader from "@/components/loader";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -149,9 +150,11 @@ function RootDocument() {
       </head>
       <body className="overflow-x-hidden">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="grid h-svh grid-rows-[1fr]">
-            {isFetching ? <Loader /> : <Outlet />}
-          </div>
+          <ErrorBoundary>
+            <div className="grid h-svh grid-rows-[1fr]">
+              {isFetching ? <Loader /> : <Outlet />}
+            </div>
+          </ErrorBoundary>
           <Toaster richColors />
           <TanStackRouterDevtools position="bottom-left" />
         </ThemeProvider>

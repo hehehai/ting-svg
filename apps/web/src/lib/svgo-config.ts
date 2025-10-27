@@ -5,7 +5,7 @@
  */
 
 import type { Config as SvgoConfig } from "svgo";
-import type { SvgoGlobalSettings, SvgoPluginConfig } from "./svgo-plugins";
+import type { SvgoGlobalSettings, SvgoPluginConfig } from "@/lib/svgo-plugins";
 
 export const getStandardPreset = (): SvgoConfig => ({
   multipass: true,
