@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useIntlayer } from "react-intlayer";
 import { LocalizedLink } from "@/components/intlayer/localized-link";
 import { getBlogPosts } from "../../../lib/blog";
+import { useBlogTranslation } from "../../../lib/blog-i18n";
 
 export const Route = createFileRoute("/{-$locale}/blog/")({
   loader: async () => {
@@ -57,16 +59,22 @@ export const Route = createFileRoute("/{-$locale}/blog/")({
 
 function BlogListPage() {
   const { posts } = Route.useLoaderData();
+  const { page } = useIntlayer("blog");
+  const { translatePosts } = useBlogTranslation();
+
+  const translatedPosts = translatePosts(posts);
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
-      <h1 className="mb-6 font-bold text-3xl md:mb-8 md:text-4xl">Blog</h1>
+      <h1 className="mb-6 font-bold text-3xl md:mb-8 md:text-4xl">
+        {page.title}
+      </h1>
 
-      {posts.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-400">No blog posts found.</p>
+      {translatedPosts.length === 0 ? (
+        <p className="text-gray-600 dark:text-gray-400">{page.noPostsFound}</p>
       ) : (
         <div className="space-y-6 md:space-y-8">
-          {posts.map((post) => (
+          {translatedPosts.map((post) => (
             <article
               className="overflow-hidden rounded-lg border border-gray-200 transition-shadow hover:shadow-lg dark:border-gray-800"
               key={post.slug}
@@ -78,18 +86,18 @@ function BlogListPage() {
                 }}
                 to="/blog/$slug"
               >
-                {post.metadata.cover && (
+                {post.cover && (
                   <img
                     alt=""
                     className="h-40 w-full object-cover md:h-48"
                     height={192}
-                    src={post.metadata.cover}
+                    src={post.cover}
                     width={800}
                   />
                 )}
                 <div className="p-4 md:p-6">
                   <time className="text-gray-600 text-xs md:text-sm dark:text-gray-400">
-                    {new Date(post.metadata.datetime).toLocaleDateString(
+                    {new Date(post.datetime).toLocaleDateString(
                       "en-US",
                       {
                         year: "numeric",
@@ -99,13 +107,13 @@ function BlogListPage() {
                     )}
                   </time>
                   <h2 className="mt-2 mb-2 font-bold text-xl md:mb-3 md:text-2xl">
-                    {post.metadata.title}
+                    {post.title}
                   </h2>
                   <p className="text-gray-700 text-sm md:text-base dark:text-gray-300">
-                    {post.metadata.desc}
+                    {post.desc}
                   </p>
                   <div className="mt-3 text-blue-600 text-sm hover:underline md:mt-4 md:text-base dark:text-blue-400">
-                    Read more →
+                    {page.readMore} →
                   </div>
                 </div>
               </LocalizedLink>

@@ -1,94 +1,82 @@
-// Import all blog posts explicitly using @content alias
-import advancedTechniquesRaw from "@content/blog/advanced-svg-techniques.mdx?raw";
-import gettingStartedRaw from "@content/blog/getting-started-with-svg-optimization.mdx?raw";
-import svgVsPngRaw from "@content/blog/svg-vs-png-when-to-use-each.mdx?raw";
-import clientSideRaw from "@content/blog/why-client-side-processing-matters.mdx?raw";
+// Import meta.content.ts files for each blog post
+import type { ReactNode } from "react";
+import advancedTechniquesMeta from "@content/blog/advanced-svg-techniques/meta.content";
+import gettingStartedMeta from "@content/blog/getting-started-with-svg-optimization/meta.content";
+import svgVsPngMeta from "@content/blog/svg-vs-png-when-to-use-each/meta.content";
+import clientSideMeta from "@content/blog/why-client-side-processing-matters/meta.content";
 
-export type BlogMetadata = {
+export type BlogDetailTranslation = {
   title: string;
   desc: string;
-  cover: string;
+  content: string;
+};
+
+export type BlogMetadata = {
+  slug: string;
   datetime: string;
+  cover: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  detail: any;
 };
 
 export type BlogPost = {
   slug: string;
-  metadata: BlogMetadata;
-  content: string;
+  datetime: string;
+  cover: string;
+  title: string | ReactNode;
+  desc: string | ReactNode;
+  content?: string;
 };
 
-// Regex for parsing frontmatter
-const FRONTMATTER_REGEX = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+// Map of slug to meta.content.ts content
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BLOG_META: Record<string, any> = {
+  "getting-started-with-svg-optimization": gettingStartedMeta.content,
+  "svg-vs-png-when-to-use-each": svgVsPngMeta.content,
+  "advanced-svg-techniques": advancedTechniquesMeta.content,
+  "why-client-side-processing-matters": clientSideMeta.content,
+};
 
-// Simple frontmatter parser that works in browser
-function parseFrontmatter(content: string): {
-  data: Record<string, string>;
-  content: string;
-} {
-  const match = content.match(FRONTMATTER_REGEX);
-
-  if (!match) {
-    return { data: {}, content };
-  }
-
-  const [, frontmatter, mdxContent] = match;
-  const data: Record<string, string> = {};
-
-  // Parse YAML-like frontmatter
-  const lines = frontmatter?.split("\n") || [];
-  for (const line of lines) {
-    const colonIndex = line.indexOf(":");
-    if (colonIndex > 0) {
-      const key = line.substring(0, colonIndex).trim();
-      const value = line.substring(colonIndex + 1).trim();
-      data[key] = value;
-    }
-  }
-
-  return { data, content: mdxContent || "" };
+export function getBlogMeta(slug: string): BlogMetadata | null {
+  return BLOG_META[slug] ?? null;
 }
 
-// Map of slug to raw MDX content
-const BLOG_CONTENT: Record<string, string> = {
-  "getting-started-with-svg-optimization": gettingStartedRaw,
-  "svg-vs-png-when-to-use-each": svgVsPngRaw,
-  "advanced-svg-techniques": advancedTechniquesRaw,
-  "why-client-side-processing-matters": clientSideRaw,
-};
+export function getAllBlogSlugs(): string[] {
+  return Object.keys(BLOG_META);
+}
 
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  const posts = Object.entries(BLOG_CONTENT).map(([slug, content]) => {
-    const { data, content: mdxContent } = parseFrontmatter(content);
-    return {
-      slug,
-      metadata: data as unknown as BlogMetadata,
-      content: mdxContent,
-    };
-  });
+export function getBlogPosts(): BlogPost[] {
+  const posts = Object.values(BLOG_META).map((meta) => ({
+    slug: meta.slug,
+    datetime: meta.datetime,
+    cover: meta.cover,
+    title: "", // Will be filled by intlayer at runtime
+    desc: "", // Will be filled by intlayer at runtime
+  }));
 
   // Sort by datetime descending
   return posts.sort(
     (a, b) =>
-      new Date(b.metadata.datetime).getTime() -
-      new Date(a.metadata.datetime).getTime()
+      new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
   );
 }
 
-export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const content = BLOG_CONTENT[slug];
-  if (!content) {
+export function getBlogPost(slug: string): BlogPost | null {
+  const meta = BLOG_META[slug];
+  if (!meta) {
     return null;
   }
 
-  const { data, content: mdxContent } = parseFrontmatter(content);
   return {
-    slug,
-    metadata: data as unknown as BlogMetadata,
-    content: mdxContent,
+    slug: meta.slug,
+    datetime: meta.datetime,
+    cover: meta.cover,
+    title: "", // Will be filled by intlayer at runtime
+    desc: "", // Will be filled by intlayer at runtime
   };
 }
 
-export async function getLatestBlogPosts(limit = 4): Promise<BlogPost[]> {
-  const posts = await getBlogPosts();
+export function getLatestBlogPosts(limit = 4): BlogPost[] {
+  const posts = getBlogPosts();
   return posts.slice(0, limit);
 }

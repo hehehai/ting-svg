@@ -6,6 +6,7 @@ import { LocalizedLink } from "@/components/intlayer/localized-link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UploadBox } from "@/components/upload-box";
 import { getLatestBlogPosts } from "@/lib/blog";
+import { useBlogTranslation } from "@/lib/blog-i18n";
 import {
   extractSvgFromBase64,
   isSvgContent,
@@ -29,6 +30,9 @@ function HomeComponent() {
   const { setOriginalSvg } = useSvgStore();
   const [isDragging, setIsDragging] = useState(false);
   const { hero, features, blog } = useIntlayer("home");
+  const { translatePosts } = useBlogTranslation();
+
+  const translatedPosts = translatePosts(latestPosts);
 
   const handleFileUpload = useCallback(
     async (file: File) => {
@@ -181,7 +185,7 @@ function HomeComponent() {
         </div>
       </section>
 
-      {latestPosts.length > 0 && (
+      {translatedPosts.length > 0 && (
         <section className="mt-12 md:mt-16">
           <div className="mb-6 flex items-center justify-between md:mb-8">
             <h2 className="font-bold text-2xl md:text-3xl">{blog.title}</h2>
@@ -193,7 +197,7 @@ function HomeComponent() {
             </LocalizedLink>
           </div>
           <div className="grid gap-4 md:grid-cols-2 md:gap-6">
-            {latestPosts.map((post) => (
+            {translatedPosts.map((post) => (
               <Card
                 className="overflow-hidden p-0 transition-shadow hover:shadow-lg"
                 key={post.slug}
@@ -203,18 +207,18 @@ function HomeComponent() {
                   params={{ slug: post.slug }}
                   to="/blog/$slug"
                 >
-                  {post.metadata.cover && (
+                  {post.cover && (
                     <img
                       alt=""
                       className="h-48 w-full object-cover"
                       height={192}
-                      src={post.metadata.cover}
+                      src={post.cover}
                       width={800}
                     />
                   )}
                   <CardHeader className="pt-2">
                     <time className="text-muted-foreground text-sm">
-                      {new Date(post.metadata.datetime).toLocaleDateString(
+                      {new Date(post.datetime).toLocaleDateString(
                         "en-US",
                         {
                           year: "numeric",
@@ -224,12 +228,12 @@ function HomeComponent() {
                       )}
                     </time>
                     <CardTitle className="mt-2">
-                      {post.metadata.title}
+                      {post.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-4 py-3">
                     <p className="text-muted-foreground text-sm">
-                      {post.metadata.desc}
+                      {post.desc}
                     </p>
                   </CardContent>
                 </LocalizedLink>

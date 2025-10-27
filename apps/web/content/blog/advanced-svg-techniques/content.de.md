@@ -1,10 +1,3 @@
----
-title: Advanced SVG Techniques for Web Developers
-desc: Explore advanced SVG techniques including animations, filters, and performance optimization
-cover: https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&h=400&fit=crop
-datetime: 2025-01-05
----
-
 # Advanced SVG Techniques for Web Developers
 
 Once you've mastered the basics of SVG, it's time to explore advanced techniques that can take your graphics to the next level.

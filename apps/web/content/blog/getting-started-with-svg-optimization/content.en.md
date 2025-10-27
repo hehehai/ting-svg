@@ -1,10 +1,3 @@
----
-title: Getting Started with SVG Optimization
-desc: Learn how to optimize your SVG files for better performance and smaller file sizes
-cover: https://images.unsplash.com/photo-1558403194-611308249627?w=800&h=400&fit=crop
-datetime: 2025-01-15
----
-
 # Getting Started with SVG Optimization
 
 SVG (Scalable Vector Graphics) files are powerful assets for modern web development, but they often contain unnecessary data that can slow down your website. In this guide, we'll explore how to optimize SVG files effectively.
