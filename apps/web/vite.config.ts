@@ -9,21 +9,18 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ mode }) => ({
   plugins: [
-    mode === "production" &&
-      cloudflare({
-        viteEnvironment: { name: "ssr" },
-        persistState: true,
-      }),
     contentCollections(),
     intlayer(),
     intlayerMiddleware(),
     tsconfigPaths(),
     tanstackStart({
       prerender: {
-        enabled: true,
+        // Disable prerendering in production due to Cloudflare Workers compatibility
+        // The Cloudflare plugin injects runtime-specific code that's not compatible with Node.js SSR
+        enabled: mode !== "production",
         filter: ({ path }) =>
           ["blog", "about"].some((item) => path.startsWith(item)),
-        failOnError: true,
+        failOnError: false,
 
         // Callback when page is successfully rendered
         onSuccess: ({ page }) => {
@@ -34,6 +31,11 @@ export default defineConfig(({ mode }) => ({
     }),
     viteReact(),
     tailwindcss(),
+    mode === "production" &&
+      cloudflare({
+        viteEnvironment: { name: "ssr" },
+        persistState: true,
+      }),
   ].filter(Boolean),
   build: {
     rollupOptions: {
