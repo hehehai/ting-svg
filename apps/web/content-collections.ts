@@ -26,6 +26,23 @@ const posts = defineCollection({
     const locale = doc._meta.fileName.split(".")[0] || "en";
     const slug = doc._meta.directory.split("/").pop();
 
+    // Format date based on locale
+    const localeMap: Record<string, string> = {
+      en: "en-US",
+      zh: "zh-CN",
+      ko: "ko-KR",
+      de: "de-DE",
+    };
+
+    const formattedDate = createdAt.toLocaleDateString(
+      localeMap[locale] || "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    );
+
     const mdx = await compileMDX(context, doc, {
       remarkPlugins: [remarkGfm],
       rehypePlugins: [
@@ -71,12 +88,14 @@ const posts = defineCollection({
     return {
       ...doc,
       createdAt,
+      formattedDate,
       locale,
       slug,
       mdx,
       _meta: {
         ...doc._meta,
         createdAt,
+        formattedDate,
         locale,
         slug,
       },

@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import type { Locales } from "intlayer";
+import { useIntlayer } from "react-intlayer";
 import { MDX } from "@/components/mdx-wrapper";
 import { getBlogPost } from "@/lib/blog";
 
@@ -52,6 +53,7 @@ export const Route = createFileRoute("/{-$locale}/blog/$slug")({
 
 function BlogDetailPage() {
   const { post } = Route.useLoaderData();
+  const { backToAllPosts } = useIntlayer("blog");
 
   // Structured Data for blog post
   const structuredData = {
@@ -117,11 +119,7 @@ function BlogDetailPage() {
               >
                 <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              {new Date(post.createdAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {post.formattedDate}
             </time>
           </div>
           <h1 className="mb-4 font-bold text-3xl text-gray-900 leading-tight tracking-tight md:mb-6 md:text-5xl dark:text-gray-100">
@@ -154,7 +152,7 @@ function BlogDetailPage() {
               >
                 <path d="M15 19l-7-7 7-7" />
               </svg>
-              Back to all posts
+              {backToAllPosts}
             </a>
           </div>
         </footer>

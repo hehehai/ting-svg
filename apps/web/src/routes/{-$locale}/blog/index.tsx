@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { Locales } from "intlayer";
+import { useIntlayer } from "react-intlayer";
 import { LocalizedLink } from "@/components/intlayer/localized-link";
 import { getBlogPosts } from "@/lib/blog";
 
@@ -58,6 +59,7 @@ export const Route = createFileRoute("/{-$locale}/blog/")({
 
 function BlogListPage() {
   const { posts } = Route.useLoaderData();
+  const { readMore } = useIntlayer("blog");
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
@@ -90,11 +92,7 @@ function BlogListPage() {
                 )}
                 <div className="p-4 md:p-6">
                   <time className="text-gray-600 text-xs md:text-sm dark:text-gray-400">
-                    {new Date(post.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {post.formattedDate}
                   </time>
                   <h2 className="mt-2 mb-2 font-bold text-xl md:mb-3 md:text-2xl">
                     {post.title}
@@ -103,7 +101,7 @@ function BlogListPage() {
                     {post.desc}
                   </p>
                   <div className="mt-3 text-blue-600 text-sm hover:underline md:mt-4 md:text-base dark:text-blue-400">
-                    Read more →
+                    {readMore} →
                   </div>
                 </div>
               </LocalizedLink>
