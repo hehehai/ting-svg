@@ -34,7 +34,11 @@ export async function getBlogPost(
   return content;
 }
 
-export function getLatestBlogPosts(limit = 4) {
-  const posts = getBlogPosts();
+export function getLatestBlogPosts(
+  limit = 4,
+  locale?: Locales,
+  order: "asc" | "desc" = "asc"
+) {
+  const posts = getBlogPosts(locale, order);
   return posts.slice(0, limit);
 }

@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import type { Locales } from "intlayer";
 import { useCallback, useEffect, useState } from "react";
 import { useIntlayer } from "react-intlayer";
 import { toast } from "sonner";
@@ -16,8 +17,12 @@ import { useSvgStore } from "@/store/svg-store";
 const LATEST_POSTS_COUNT = 4;
 
 export const Route = createFileRoute("/{-$locale}/")({
-  loader: async () => {
-    const latestPosts = getLatestBlogPosts(LATEST_POSTS_COUNT);
+  loader: async ({ params }) => {
+    const latestPosts = getLatestBlogPosts(
+      LATEST_POSTS_COUNT,
+      params.locale as Locales,
+      "desc"
+    );
     return { latestPosts };
   },
   component: HomeComponent,
