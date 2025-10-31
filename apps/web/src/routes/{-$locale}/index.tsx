@@ -17,7 +17,7 @@ const LATEST_POSTS_COUNT = 4;
 
 export const Route = createFileRoute("/{-$locale}/")({
   loader: async () => {
-    const latestPosts = await getLatestBlogPosts(LATEST_POSTS_COUNT);
+    const latestPosts = getLatestBlogPosts(LATEST_POSTS_COUNT);
     return { latestPosts };
   },
   component: HomeComponent,
@@ -201,34 +201,27 @@ function HomeComponent() {
                   params={{ slug: post.slug }}
                   to="/blog/$slug"
                 >
-                  {post.metadata.cover && (
+                  {post.cover && (
                     <img
                       alt=""
                       className="h-48 w-full object-cover"
                       height={192}
-                      src={post.metadata.cover}
+                      src={post.cover}
                       width={800}
                     />
                   )}
                   <CardHeader className="pt-2">
                     <time className="text-muted-foreground text-sm">
-                      {new Date(post.metadata.datetime).toLocaleDateString(
-                        "en-US",
-                        {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        }
-                      )}
+                      {new Date(post.createdAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </time>
-                    <CardTitle className="mt-2">
-                      {post.metadata.title}
-                    </CardTitle>
+                    <CardTitle className="mt-2">{post.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="px-4 py-3">
-                    <p className="text-muted-foreground text-sm">
-                      {post.metadata.desc}
-                    </p>
+                    <p className="text-muted-foreground text-sm">{post.desc}</p>
                   </CardContent>
                 </LocalizedLink>
               </Card>

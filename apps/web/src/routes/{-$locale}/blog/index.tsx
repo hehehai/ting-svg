@@ -4,7 +4,7 @@ import { getBlogPosts } from "@/lib/blog";
 
 export const Route = createFileRoute("/{-$locale}/blog/")({
   loader: async () => {
-    const posts = await getBlogPosts();
+    const posts = getBlogPosts();
     return { posts };
   },
   head: () => ({
@@ -78,31 +78,28 @@ function BlogListPage() {
                 }}
                 to="/blog/$slug"
               >
-                {post.metadata.cover && (
+                {post.cover && (
                   <img
                     alt=""
                     className="h-40 w-full object-cover md:h-48"
                     height={192}
-                    src={post.metadata.cover}
+                    src={post.cover}
                     width={800}
                   />
                 )}
                 <div className="p-4 md:p-6">
                   <time className="text-gray-600 text-xs md:text-sm dark:text-gray-400">
-                    {new Date(post.metadata.datetime).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
-                    )}
+                    {new Date(post.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </time>
                   <h2 className="mt-2 mb-2 font-bold text-xl md:mb-3 md:text-2xl">
-                    {post.metadata.title}
+                    {post.title}
                   </h2>
                   <p className="text-gray-700 text-sm md:text-base dark:text-gray-300">
-                    {post.metadata.desc}
+                    {post.desc}
                   </p>
                   <div className="mt-3 text-blue-600 text-sm hover:underline md:mt-4 md:text-base dark:text-blue-400">
                     Read more →

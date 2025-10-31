@@ -1,4 +1,5 @@
 import { cloudflare } from "@cloudflare/vite-plugin";
+import contentCollections from "@content-collections/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
@@ -13,10 +14,24 @@ export default defineConfig(({ mode }) => ({
         viteEnvironment: { name: "ssr" },
         persistState: true,
       }),
+    contentCollections(),
     intlayer(),
     intlayerMiddleware(),
     tsconfigPaths(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        filter: ({ path }) =>
+          ["blog", "about"].some((item) => path.startsWith(item)),
+        failOnError: true,
+
+        // Callback when page is successfully rendered
+        onSuccess: ({ page }) => {
+          // biome-ignore lint/suspicious/noConsole: <explanation>
+          console.info(`Rendered ${page.path}!`);
+        },
+      },
+    }),
     viteReact(),
     tailwindcss(),
   ].filter(Boolean),

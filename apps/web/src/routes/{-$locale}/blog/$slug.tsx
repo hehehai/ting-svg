@@ -1,15 +1,11 @@
-import { compile, run } from "@mdx-js/mdx";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import type React from "react";
-import { useEffect, useState } from "react";
-import * as runtime from "react/jsx-runtime";
-import rehypePrettyCode from "rehype-pretty-code";
-import { mdxComponents } from "@/components/mdx-content";
+import type { Locales } from "intlayer";
+import { MDX } from "@/components/mdx-wrapper";
 import { getBlogPost } from "@/lib/blog";
 
 export const Route = createFileRoute("/{-$locale}/blog/$slug")({
   loader: async ({ params }) => {
-    const post = await getBlogPost(params.slug);
+    const post = await getBlogPost(params.slug, params.locale as Locales);
     if (!post) {
       throw notFound();
     }
@@ -22,12 +18,12 @@ export const Route = createFileRoute("/{-$locale}/blog/$slug")({
 
     const { post } = loaderData;
     const url = `https://tiny-svg.com/blog/${post.slug}`;
-    const imageUrl = post.metadata.cover || "https://tiny-svg.com/og-image.png";
+    const imageUrl = post.cover || "https://tiny-svg.com/og-image.png";
 
     return {
       meta: [
-        { title: `${post.metadata.title} | Tiny SVG Blog` },
-        { name: "description", content: post.metadata.desc },
+        { title: `${post.title} | Tiny SVG Blog` },
+        { name: "description", content: post.desc },
         {
           name: "keywords",
           content:
@@ -36,16 +32,16 @@ export const Route = createFileRoute("/{-$locale}/blog/$slug")({
         // Open Graph
         { property: "og:type", content: "article" },
         { property: "og:url", content: url },
-        { property: "og:title", content: post.metadata.title },
-        { property: "og:description", content: post.metadata.desc },
+        { property: "og:title", content: post.title },
+        { property: "og:description", content: post.desc },
         { property: "og:image", content: imageUrl },
-        { property: "article:published_time", content: post.metadata.datetime },
+        { property: "article:published_time", content: post.datetime },
         { property: "article:author", content: "Tiny SVG Team" },
         // Twitter
         { property: "twitter:card", content: "summary_large_image" },
         { property: "twitter:url", content: url },
-        { property: "twitter:title", content: post.metadata.title },
-        { property: "twitter:description", content: post.metadata.desc },
+        { property: "twitter:title", content: post.title },
+        { property: "twitter:description", content: post.desc },
         { property: "twitter:image", content: imageUrl },
       ],
       links: [{ rel: "canonical", href: url }],
@@ -54,28 +50,18 @@ export const Route = createFileRoute("/{-$locale}/blog/$slug")({
   component: BlogDetailPage,
 });
 
-// Wrapper component to pass mdxComponents to the compiled MDX
-function MdxWrapper({
-  Component,
-}: {
-  Component: React.ComponentType<{ components?: Record<string, unknown> }>;
-}) {
-  return <Component components={mdxComponents} />;
-}
-
 function BlogDetailPage() {
   const { post } = Route.useLoaderData();
-  const [MdxComponent, setMdxComponent] = useState<any>(null);
 
   // Structured Data for blog post
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.metadata.title,
-    description: post.metadata.desc,
-    image: post.metadata.cover || "https://tiny-svg.com/og-image.png",
-    datePublished: post.metadata.datetime,
-    dateModified: post.metadata.datetime,
+    headline: post.title,
+    description: post.desc,
+    image: post.cover || "https://tiny-svg.com/og-image.png",
+    datePublished: post.datetime,
+    dateModified: post.datetime,
     author: {
       "@type": "Organization",
       name: "Tiny SVG Team",
@@ -95,34 +81,6 @@ function BlogDetailPage() {
     },
   };
 
-  useEffect(() => {
-    const compileMdx = async () => {
-      const compiled = await compile(post.content, {
-        outputFormat: "function-body",
-        development: false,
-        rehypePlugins: [
-          [
-            rehypePrettyCode,
-            {
-              theme: "github-dark-dimmed",
-              keepBackground: true,
-              defaultLang: "plaintext",
-            },
-          ],
-        ],
-      });
-
-      const mdxModule = await run(String(compiled), {
-        ...runtime,
-        baseUrl: import.meta.url,
-      });
-
-      setMdxComponent(() => mdxModule.default);
-    };
-
-    compileMdx();
-  }, [post.content]);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
       {/* Structured Data */}
@@ -133,13 +91,13 @@ function BlogDetailPage() {
 
       <article className="mx-auto w-full max-w-full px-4 py-8 md:max-w-4xl md:py-12">
         {/* Cover Image */}
-        {post.metadata.cover && (
+        {post.cover && (
           <div className="mb-8 overflow-hidden rounded-xl shadow-2xl md:mb-12 md:rounded-2xl">
             <img
               alt=""
               className="h-[200px] w-full object-cover md:h-[400px]"
               height={400}
-              src={post.metadata.cover}
+              src={post.cover}
               width={1200}
             />
           </div>
@@ -159,7 +117,7 @@ function BlogDetailPage() {
               >
                 <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              {new Date(post.metadata.datetime).toLocaleDateString("en-US", {
+              {new Date(post.createdAt).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -167,27 +125,16 @@ function BlogDetailPage() {
             </time>
           </div>
           <h1 className="mb-4 font-bold text-3xl text-gray-900 leading-tight tracking-tight md:mb-6 md:text-5xl dark:text-gray-100">
-            {post.metadata.title}
+            {post.title}
           </h1>
           <p className="text-base text-gray-600 leading-relaxed md:text-xl dark:text-gray-400">
-            {post.metadata.desc}
+            {post.desc}
           </p>
         </header>
 
         {/* Content */}
         <div className="prose prose-lg blog-content mx-auto w-full max-w-full overflow-x-hidden md:max-w-3xl">
-          {MdxComponent ? (
-            <MdxWrapper Component={MdxComponent} />
-          ) : (
-            <div className="flex min-h-[400px] items-center justify-center">
-              <div className="text-center">
-                <div className="mx-auto mb-4 size-12 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 dark:border-gray-700 dark:border-t-blue-400" />
-                <p className="text-gray-500 dark:text-gray-400">
-                  Loading content...
-                </p>
-              </div>
-            </div>
-          )}
+          <MDX code={post.mdx} />
         </div>
 
         {/* Footer */}

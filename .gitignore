@@ -48,3 +48,6 @@ coverage
 .cache
 tmp
 temp
+
+# Content collections generated
+.content-collections
