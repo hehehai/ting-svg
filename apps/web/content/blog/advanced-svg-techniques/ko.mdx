@@ -1,17 +1,17 @@
 ---
-title: 韩文 Advanced SVG Techniques for Web Developers
-desc: Explore advanced SVG techniques including animations, filters, and performance optimization
+title: 웹 개발자를 위한 고급 SVG 기술
+desc: 애니메이션, 필터 및 성능 최적화를 포함한 고급 SVG 기술 탐색
 cover: https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&h=400&fit=crop
 datetime: 2025-01-05
 ---
 
-# Advanced SVG Techniques for Web Developers
+# 웹 개발자를 위한 고급 SVG 기술
 
-Once you've mastered the basics of SVG, it's time to explore advanced techniques that can take your graphics to the next level.
+SVG의 기본을 마스터했다면, 이제 그래픽을 한 단계 더 발전시킬 수 있는 고급 기술을 탐색할 시간입니다.
 
-## SVG Sprites for Better Performance
+## 성능 향상을 위한 SVG 스프라이트
 
-Instead of loading multiple SVG files, combine them into a sprite:
+여러 SVG 파일을 로드하는 대신 스프라이트로 결합하세요:
 
 ```xml
 <svg style="display: none;">
@@ -23,15 +23,15 @@ Instead of loading multiple SVG files, combine them into a sprite:
   </symbol>
 </svg>
 
-<!-- Use the icons -->
+<!-- 아이콘 사용 -->
 <svg class="icon">
   <use href="#icon-home"/>
 </svg>
 ```
 
-## CSS Animations with SVG
+## SVG에 CSS 애니메이션 적용
 
-Animate SVG properties using CSS:
+CSS를 사용하여 SVG 속성에 애니메이션 적용:
 
 ```css
 .animated-path {
@@ -47,9 +47,9 @@ Animate SVG properties using CSS:
 }
 ```
 
-## SVG Filters for Visual Effects
+## 시각 효과를 위한 SVG 필터
 
-Create stunning effects with SVG filters:
+SVG 필터로 멋진 효과 만들기:
 
 ```xml
 <svg>
@@ -66,70 +66,70 @@ Create stunning effects with SVG filters:
 </svg>
 ```
 
-## Responsive SVG with viewBox
+## viewBox로 반응형 SVG 만들기
 
-Make SVG responsive while maintaining aspect ratio:
+종횡비를 유지하면서 SVG를 반응형으로 만들기:
 
 ```xml
 <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-  <!-- content -->
+  <!-- 내용 -->
 </svg>
 ```
 
-## Inline SVG vs External Files
+## 인라인 SVG vs 외부 파일
 
-### Inline SVG Benefits
+### 인라인 SVG의 장점
 
-- No HTTP request
-- Can be styled with CSS
-- Can be animated with JavaScript
-- Better for critical graphics
+- HTTP 요청 없음
+- CSS로 스타일 지정 가능
+- JavaScript로 애니메이션 가능
+- 중요한 그래픽에 더 적합
 
-### External SVG Benefits
+### 외부 SVG의 장점
 
-- Browser caching
-- Reusable across pages
-- Cleaner HTML
-- Better for non-critical graphics
+- 브라우저 캐싱
+- 페이지 간 재사용 가능
+- 더 깨끗한 HTML
+- 중요하지 않은 그래픽에 더 적합
 
-## Performance Best Practices
+## 성능 모범 사례
 
-1. **Minimize path complexity** - fewer points = faster rendering
-2. **Use `<use>` for repeated elements** - reduces DOM size
-3. **Optimize with SVGO** - remove unnecessary data
-4. **Consider lazy loading** - for below-the-fold SVGs
-5. **Use CSS transforms** - hardware accelerated
+1. **경로 복잡도 최소화** - 포인트가 적을수록 렌더링이 빠름
+2. **반복 요소에 `<use>` 사용** - DOM 크기 감소
+3. **SVGO로 최적화** - 불필요한 데이터 제거
+4. **지연 로딩 고려** - 스크롤 아래의 SVG용
+5. **CSS 변환 사용** - 하드웨어 가속
 
-## Accessibility Considerations
+## 접근성 고려사항
 
-Make your SVG accessible:
+SVG를 접근 가능하게 만들기:
 
 ```xml
 <svg role="img" aria-labelledby="title desc">
-  <title id="title">Company Logo</title>
-  <desc id="desc">A blue circle with white text</desc>
-  <!-- content -->
+  <title id="title">회사 로고</title>
+  <desc id="desc">흰색 텍스트가 있는 파란색 원</desc>
+  <!-- 내용 -->
 </svg>
 ```
 
-## JavaScript Integration
+## JavaScript 통합
 
-Manipulate SVG with JavaScript:
+JavaScript로 SVG 조작:
 
 ```javascript
 const circle = document.querySelector('circle');
 circle.setAttribute('r', 50);
 circle.style.fill = 'red';
 
-// Animate with GSAP or other libraries
+// GSAP 또는 다른 라이브러리로 애니메이션
 gsap.to(circle, {
   attr: { r: 100 },
   duration: 1
 });
 ```
 
-## Conclusion
+## 결론
 
-SVG is a powerful format with endless possibilities. By mastering these advanced techniques, you can create performant, accessible, and visually stunning graphics for the web.
+SVG는 무한한 가능성을 가진 강력한 형식입니다. 이러한 고급 기술을 마스터함으로써 웹을 위한 성능이 뛰어나고 접근 가능하며 시각적으로 멋진 그래픽을 만들 수 있습니다.
 
-Keep experimenting and don't forget to optimize your SVG files with Tiny SVG!
+계속 실험하고 Tiny SVG로 SVG 파일을 최적화하는 것을 잊지 마세요!

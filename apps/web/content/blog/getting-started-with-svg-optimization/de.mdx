@@ -1,86 +1,86 @@
 ---
-title: Getting Started with SVG Optimization
-desc: Learn how to optimize your SVG files for better performance and smaller file sizes
+title: Erste Schritte mit SVG-Optimierung
+desc: Erfahren Sie, wie Sie Ihre SVG-Dateien für bessere Leistung und kleinere Dateigrößen optimieren
 cover: https://images.unsplash.com/photo-1558403194-611308249627?w=800&h=400&fit=crop
 datetime: 2025-01-15
 ---
 
-# Getting Started with SVG Optimization
+# Erste Schritte mit SVG-Optimierung
 
-SVG (Scalable Vector Graphics) files are powerful assets for modern web development, but they often contain unnecessary data that can slow down your website. In this guide, we'll explore how to optimize SVG files effectively.
+SVG-Dateien (Scalable Vector Graphics) sind leistungsstarke Assets für die moderne Webentwicklung, enthalten jedoch oft unnötige Daten, die Ihre Website verlangsamen können. In diesem Leitfaden werden wir untersuchen, wie Sie SVG-Dateien effektiv optimieren können.
 
-## Why Optimize SVG Files?
+## Warum SVG-Dateien optimieren?
 
-SVG files exported from design tools like Figma, Sketch, or Adobe Illustrator often contain:
+SVG-Dateien, die aus Design-Tools wie Figma, Sketch oder Adobe Illustrator exportiert wurden, enthalten oft:
 
-- Hidden metadata and comments
-- Unused definitions and groups
-- Redundant attributes
-- Inefficient path data
-- Default values that can be omitted
+- Versteckte Metadaten und Kommentare
+- Ungenutzte Definitionen und Gruppen
+- Redundante Attribute
+- Ineffiziente Pfaddaten
+- Standardwerte, die weggelassen werden können
 
-By optimizing these files, you can:
+Durch die Optimierung dieser Dateien können Sie:
 
-1. **Reduce file size** by 30-70%
-2. **Improve page load times**
-3. **Enhance rendering performance**
-4. **Make your SVG code more maintainable**
+1. **Dateigröße reduzieren** um 30-70%
+2. **Seitenladezeiten verbessern**
+3. **Rendering-Leistung steigern**
+4. **Ihren SVG-Code wartbarer machen**
 
-## Basic Optimization Techniques
+## Grundlegende Optimierungstechniken
 
-### Remove Unnecessary Metadata
+### Unnötige Metadaten entfernen
 
-Most design tools add metadata that browsers don't need:
+Die meisten Design-Tools fügen Metadaten hinzu, die Browser nicht benötigen:
 
 ```xml
-<!-- Before -->
+<!-- Vorher -->
 <svg xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-  <!-- content -->
+  <!-- Inhalt -->
 </svg>
 
-<!-- After -->
+<!-- Nachher -->
 <svg>
-  <!-- content -->
+  <!-- Inhalt -->
 </svg>
 ```
 
-### Simplify Paths
+### Pfade vereinfachen
 
-Path data can often be simplified without visual changes:
+Pfaddaten können oft ohne visuelle Änderungen vereinfacht werden:
 
 ```xml
-<!-- Before -->
+<!-- Vorher -->
 <path d="M10.000,10.000 L20.000,20.000" />
 
-<!-- After -->
+<!-- Nachher -->
 <path d="M10 10L20 20" />
 ```
 
-### Remove Default Values
+### Standardwerte entfernen
 
-Many attributes have default values that don't need to be specified:
+Viele Attribute haben Standardwerte, die nicht angegeben werden müssen:
 
 ```xml
-<!-- Before -->
+<!-- Vorher -->
 <rect fill="black" stroke="none" />
 
-<!-- After -->
+<!-- Nachher -->
 <rect />
 ```
 
-## Using Tiny SVG
+## Tiny SVG verwenden
 
-Our tool makes optimization effortless:
+Unser Tool macht die Optimierung mühelos:
 
-1. **Upload or paste** your SVG file
-2. **Preview** the before and after
-3. **Download** the optimized version
+1. **Hochladen oder einfügen** Sie Ihre SVG-Datei
+2. **Vorschau** von Vorher und Nachher
+3. **Herunterladen** der optimierten Version
 
-All processing happens in your browser - your files never leave your device!
+Die gesamte Verarbeitung erfolgt in Ihrem Browser - Ihre Dateien verlassen niemals Ihr Gerät!
 
-## Conclusion
+## Fazit
 
-SVG optimization is an essential step in modern web development. With the right tools, you can significantly reduce file sizes while maintaining perfect visual quality.
+SVG-Optimierung ist ein wesentlicher Schritt in der modernen Webentwicklung. Mit den richtigen Tools können Sie Dateigrößen erheblich reduzieren und dabei perfekte visuelle Qualität beibehalten.
 
-Start optimizing your SVG files today and see the difference!
+Beginnen Sie noch heute mit der Optimierung Ihrer SVG-Dateien und sehen Sie den Unterschied!

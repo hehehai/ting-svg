@@ -1,148 +1,148 @@
 ---
-title: 中文 Why Client-Side Processing Matters for Privacy
-desc: Understanding the importance of client-side SVG optimization and how it protects your data
+title: 为什么客户端处理对隐私很重要
+desc: 了解客户端 SVG 优化的重要性以及它如何保护您的数据
 cover: https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=400&fit=crop
 datetime: 2025-01-01
 ---
 
-# Why Client-Side Processing Matters for Privacy
+# 为什么客户端处理对隐私很重要
 
-In an age where data privacy is paramount, the way we process files online matters more than ever. Let's explore why client-side processing is the future of web applications.
+在数据隐私至关重要的时代，我们在线处理文件的方式比以往任何时候都更重要。让我们探讨为什么客户端处理是 Web 应用程序的未来。
 
-## The Traditional Approach
+## 传统方法
 
-Most online tools follow this pattern:
+大多数在线工具遵循这种模式：
 
-1. User uploads file to server
-2. Server processes the file
-3. Server sends back the result
-4. Server may store your files
+1. 用户将文件上传到服务器
+2. 服务器处理文件
+3. 服务器发送回结果
+4. 服务器可能存储您的文件
 
-**Problem**: Your files leave your device and exist on someone else's computer.
+**问题**：您的文件离开了您的设备，存在于别人的计算机上。
 
-## The Client-Side Approach
+## 客户端方法
 
-With client-side processing:
+使用客户端处理：
 
-1. File stays in your browser
-2. Processing happens locally
-3. No network transfer needed
-4. No server storage
+1. 文件留在您的浏览器中
+2. 在本地进行处理
+3. 无需网络传输
+4. 无服务器存储
 
-**Benefit**: Your files never leave your device.
+**好处**：您的文件永远不会离开您的设备。
 
-## Why This Matters
+## 为什么这很重要
 
-### 1. Complete Privacy
+### 1. 完全隐私
 
-Your SVG files might contain:
-- Proprietary designs
-- Unreleased products
-- Client work under NDA
-- Sensitive information
+您的 SVG 文件可能包含：
+- 专有设计
+- 未发布的产品
+- NDA 下的客户工作
+- 敏感信息
 
-With client-side processing, these files remain 100% private.
+使用客户端处理，这些文件保持 100% 私密。
 
-### 2. Better Security
+### 2. 更好的安全性
 
-No upload means:
-- No man-in-the-middle attacks during transfer
-- No server breaches exposing your files
-- No accidental data leaks
-- No terms of service concerns
+无上传意味着：
+- 传输过程中无中间人攻击
+- 无服务器泄露您的文件
+- 无意外数据泄漏
+- 无服务条款问题
 
-### 3. Faster Processing
+### 3. 更快的处理
 
-Client-side processing is often faster because:
-- No upload/download time
-- No server queue
-- No network latency
-- Direct processing on your hardware
+客户端处理通常更快，因为：
+- 无上传/下载时间
+- 无服务器队列
+- 无网络延迟
+- 直接在您的硬件上处理
 
-### 4. Works Offline
+### 4. 离线工作
 
-Once the app loads, you can:
-- Process files without internet
-- Work on planes or trains
-- Avoid connection issues
-- Maintain productivity anywhere
+应用加载后，您可以：
+- 无需互联网即可处理文件
+- 在飞机或火车上工作
+- 避免连接问题
+- 随时随地保持生产力
 
-### 5. Unlimited Usage
+### 5. 无限使用
 
-Server-based tools often limit:
-- Number of files
-- File sizes
-- Processing frequency
-- Features behind paywalls
+基于服务器的工具通常限制：
+- 文件数量
+- 文件大小
+- 处理频率
+- 付费墙后的功能
 
-Client-side tools have no such limits.
+客户端工具没有这些限制。
 
-## How Tiny SVG Implements This
+## Tiny SVG 如何实现这一点
 
-Our approach:
+我们的方法：
 
 ```javascript
-// Everything happens in your browser
+// 一切都在您的浏览器中进行
 const worker = new Worker('svgo.worker.js');
 
 worker.postMessage({ svg: yourSVGContent });
 
 worker.onmessage = (e) => {
   const optimizedSVG = e.data;
-  // Never leaves your browser!
+  // 永远不会离开您的浏览器！
 };
 ```
 
-### Web Workers for Performance
+### 使用 Web Workers 提高性能
 
-We use Web Workers to:
-- Keep the UI responsive
-- Process large files efficiently
-- Run optimization in background threads
-- Avoid blocking user interactions
+我们使用 Web Workers 来：
+- 保持 UI 响应
+- 高效处理大文件
+- 在后台线程中运行优化
+- 避免阻塞用户交互
 
-### Local Storage Only
+### 仅本地存储
 
-Your preferences are stored using:
-- Browser's localStorage
-- No cookies
-- No tracking
-- No external databases
+您的偏好设置使用以下方式存储：
+- 浏览器的 localStorage
+- 无 cookies
+- 无跟踪
+- 无外部数据库
 
-## The Future of Web Apps
+## Web 应用程序的未来
 
-Modern browsers are incredibly powerful. They can:
-- Process images and video
-- Run complex calculations
-- Handle large datasets
-- Perform AI/ML inference
+现代浏览器功能非常强大。它们可以：
+- 处理图像和视频
+- 运行复杂计算
+- 处理大型数据集
+- 执行 AI/ML 推理
 
-Client-side processing leverages this power while respecting your privacy.
+客户端处理利用这种能力，同时尊重您的隐私。
 
-## Trade-offs
+## 权衡
 
-Client-side processing isn't always perfect:
+客户端处理并不总是完美的：
 
-**Limitations**:
-- Requires modern browser
-- Uses device resources
-- Limited by browser capabilities
-- No cross-device sync (without explicit setup)
+**限制**：
+- 需要现代浏览器
+- 使用设备资源
+- 受浏览器功能限制
+- 无跨设备同步（没有明确设置）
 
-**When Server-Side Makes Sense**:
-- Collaborative features needed
-- Processing too intensive for browsers
-- Cross-device synchronization required
-- Centralized data management necessary
+**何时服务器端有意义**：
+- 需要协作功能
+- 处理对浏览器来说太密集
+- 需要跨设备同步
+- 需要集中数据管理
 
-## Conclusion
+## 结论
 
-For tools like SVG optimization, client-side processing offers the perfect balance of:
-- Privacy
-- Security
-- Performance
-- Convenience
+对于像 SVG 优化这样的工具，客户端处理提供了完美的平衡：
+- 隐私
+- 安全
+- 性能
+- 便利
 
-Your files are yours. They should stay on your device.
+您的文件是您的。它们应该留在您的设备上。
 
-Try Tiny SVG today and experience the benefits of true client-side processing!
+今天就试试 Tiny SVG，体验真正的客户端处理的好处！

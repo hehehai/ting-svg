@@ -1,86 +1,86 @@
 ---
-title: Getting Started with SVG Optimization
-desc: Learn how to optimize your SVG files for better performance and smaller file sizes
+title: SVG 최적화 시작하기
+desc: 더 나은 성능과 더 작은 파일 크기를 위해 SVG 파일을 최적화하는 방법 배우기
 cover: https://images.unsplash.com/photo-1558403194-611308249627?w=800&h=400&fit=crop
 datetime: 2025-01-15
 ---
 
-# Getting Started with SVG Optimization
+# SVG 최적화 시작하기
 
-SVG (Scalable Vector Graphics) files are powerful assets for modern web development, but they often contain unnecessary data that can slow down your website. In this guide, we'll explore how to optimize SVG files effectively.
+SVG(Scalable Vector Graphics) 파일은 현대 웹 개발에 강력한 자산이지만, 웹사이트 속도를 느리게 할 수 있는 불필요한 데이터가 포함되어 있는 경우가 많습니다. 이 가이드에서는 SVG 파일을 효과적으로 최적화하는 방법을 살펴보겠습니다.
 
-## Why Optimize SVG Files?
+## SVG 파일을 최적화하는 이유는?
 
-SVG files exported from design tools like Figma, Sketch, or Adobe Illustrator often contain:
+Figma, Sketch 또는 Adobe Illustrator와 같은 디자인 도구에서 내보낸 SVG 파일에는 다음이 포함되는 경우가 많습니다:
 
-- Hidden metadata and comments
-- Unused definitions and groups
-- Redundant attributes
-- Inefficient path data
-- Default values that can be omitted
+- 숨겨진 메타데이터 및 주석
+- 사용하지 않는 정의 및 그룹
+- 중복 속성
+- 비효율적인 경로 데이터
+- 생략할 수 있는 기본값
 
-By optimizing these files, you can:
+이러한 파일을 최적화하면 다음을 수행할 수 있습니다:
 
-1. **Reduce file size** by 30-70%
-2. **Improve page load times**
-3. **Enhance rendering performance**
-4. **Make your SVG code more maintainable**
+1. **파일 크기 감소** 30-70%
+2. **페이지 로드 시간 개선**
+3. **렌더링 성능 향상**
+4. **SVG 코드 유지 관리 용이**
 
-## Basic Optimization Techniques
+## 기본 최적화 기술
 
-### Remove Unnecessary Metadata
+### 불필요한 메타데이터 제거
 
-Most design tools add metadata that browsers don't need:
+대부분의 디자인 도구는 브라우저에 필요하지 않은 메타데이터를 추가합니다:
 
 ```xml
-<!-- Before -->
+<!-- 이전 -->
 <svg xmlns:xlink="http://www.w3.org/1999/xlink"
      xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-  <!-- content -->
+  <!-- 내용 -->
 </svg>
 
-<!-- After -->
+<!-- 이후 -->
 <svg>
-  <!-- content -->
+  <!-- 내용 -->
 </svg>
 ```
 
-### Simplify Paths
+### 경로 단순화
 
-Path data can often be simplified without visual changes:
+경로 데이터는 시각적 변화 없이 단순화할 수 있는 경우가 많습니다:
 
 ```xml
-<!-- Before -->
+<!-- 이전 -->
 <path d="M10.000,10.000 L20.000,20.000" />
 
-<!-- After -->
+<!-- 이후 -->
 <path d="M10 10L20 20" />
 ```
 
-### Remove Default Values
+### 기본값 제거
 
-Many attributes have default values that don't need to be specified:
+많은 속성에는 지정할 필요가 없는 기본값이 있습니다:
 
 ```xml
-<!-- Before -->
+<!-- 이전 -->
 <rect fill="black" stroke="none" />
 
-<!-- After -->
+<!-- 이후 -->
 <rect />
 ```
 
-## Using Tiny SVG
+## Tiny SVG 사용하기
 
-Our tool makes optimization effortless:
+우리 도구는 최적화를 쉽게 만듭니다:
 
-1. **Upload or paste** your SVG file
-2. **Preview** the before and after
-3. **Download** the optimized version
+1. SVG 파일 **업로드 또는 붙여넣기**
+2. 이전과 이후를 **미리보기**
+3. 최적화된 버전 **다운로드**
 
-All processing happens in your browser - your files never leave your device!
+모든 처리는 브라우저에서 이루어집니다 - 파일이 기기를 떠나지 않습니다!
 
-## Conclusion
+## 결론
 
-SVG optimization is an essential step in modern web development. With the right tools, you can significantly reduce file sizes while maintaining perfect visual quality.
+SVG 최적화는 현대 웹 개발의 필수 단계입니다. 올바른 도구를 사용하면 완벽한 시각적 품질을 유지하면서 파일 크기를 크게 줄일 수 있습니다.
 
-Start optimizing your SVG files today and see the difference!
+오늘부터 SVG 파일 최적화를 시작하고 그 차이를 확인하세요!
