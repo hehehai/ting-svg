@@ -494,8 +494,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](./LICENSE
 ## 📞 Support
 
 - **Live Demo**: [https://tiny-svg.actnow.dev](https://tiny-svg.actnow.dev)
-- **Issues**: [GitHub Issues](https://github.com/hehehai/ting-svg/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/hehehai/ting-svg/discussions)
+- **Issues**: [GitHub Issues](https://github.com/hehehai/tiny-svg/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/hehehai/tiny-svg/discussions)
 
 ---
 

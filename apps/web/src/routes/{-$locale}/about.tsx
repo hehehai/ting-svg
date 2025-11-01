@@ -156,7 +156,7 @@ function AboutComponent() {
         </p>
         <a
           className="inline-flex items-center gap-2 text-primary hover:underline"
-          href="https://github.com/hehehai/ting-svg"
+          href="https://github.com/hehehai/tiny-svg"
           rel="noopener noreferrer"
           target="_blank"
         >

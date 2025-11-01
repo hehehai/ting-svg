@@ -84,7 +84,7 @@ export default function Header() {
           <a
             aria-label="View on GitHub"
             className="hidden items-center justify-center rounded-md p-2 transition-colors hover:bg-accent sm:flex"
-            href="https://github.com/hehehai/ting-svg"
+            href="https://github.com/hehehai/tiny-svg"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -125,7 +125,7 @@ export default function Header() {
             ))}
             <a
               className="flex items-center gap-2 rounded-md px-3 py-3 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-              href="https://github.com/hehehai/ting-svg"
+              href="https://github.com/hehehai/tiny-svg"
               onClick={() => setMobileMenuOpen(false)}
               rel="noopener noreferrer"
               target="_blank"
