@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => ({
         enabled: mode !== "production",
         filter: ({ path }) =>
           ["blog", "about"].some((item) => path.startsWith(item)),
+        // FIX: ignore worker error
         failOnError: false,
 
         // Callback when page is successfully rendered
